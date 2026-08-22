@@ -10,10 +10,10 @@ export const Pricing: React.FC<PricingProps> = ({ onSelectPackage }) => {
   const { STARTER, BUSINESS, AI_BUSINESS } = CONFIG.PRICING;
 
   return (
-    <section id="paketler" className="py-16 md:py-20 bg-[#090A0A] relative">
+    <section id="paketler" className="py-16 md:py-20 bg-[#090A0A] relative overflow-hidden">
       
       {/* Background depth */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[350px] bg-[#141514] rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] sm:w-[450px] h-[350px] bg-[#141514] rounded-full blur-3xl pointer-events-none -z-10" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
@@ -31,19 +31,19 @@ export const Pricing: React.FC<PricingProps> = ({ onSelectPackage }) => {
         </div>
 
         {/* 3 Pricing Cards Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch w-full max-w-full">
           
           {/* STARTER CARD */}
           <div
             id="pricing-card-starter"
-            className="rounded-2xl bg-[#141514] border border-[#F3F0E8]/[0.09] p-6 sm:p-7 flex flex-col justify-between hover:border-[#F3F0E8]/[0.18] transition-all shadow-xl"
+            className="w-full min-w-0 rounded-2xl bg-[#141514] border border-[#F3F0E8]/[0.09] p-4.5 sm:p-6 lg:p-7 flex flex-col justify-between hover:border-[#F3F0E8]/[0.18] transition-all shadow-xl"
           >
             <div>
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-bold text-[#AAA69D] tracking-wider font-mono">
+              <div className="flex items-center justify-between mb-3 gap-2">
+                <span className="text-xs font-bold text-[#AAA69D] tracking-wider font-mono truncate">
                   {STARTER.name}
                 </span>
-                <span className="text-[11px] text-[#74716A] font-medium">Temel Başlangıç</span>
+                <span className="text-[11px] text-[#74716A] font-medium shrink-0">Temel Başlangıç</span>
               </div>
 
               <div className="mb-3">
@@ -78,7 +78,7 @@ export const Pricing: React.FC<PricingProps> = ({ onSelectPackage }) => {
               <button
                 onClick={() => onSelectPackage(STARTER.name)}
                 id="btn-starter-demo"
-                className="w-full py-2.5 px-4 rounded-xl bg-[#181918] hover:bg-[#1D1E1C] text-[#F3F0E8] hover:text-white text-xs font-medium tracking-wide flex items-center justify-center gap-2 border border-[#F3F0E8]/[0.15] transition-all duration-200 cursor-pointer"
+                className="w-full min-h-[44px] py-2.5 px-4 rounded-xl bg-[#181918] hover:bg-[#1D1E1C] text-[#F3F0E8] hover:text-white text-xs font-medium tracking-wide flex items-center justify-center gap-2 border border-[#F3F0E8]/[0.15] transition-all duration-200 cursor-pointer"
               >
                 <span>{STARTER.ctaText}</span>
                 <ArrowRight className="w-3.5 h-3.5 text-[#AAA69D]" />
@@ -89,20 +89,20 @@ export const Pricing: React.FC<PricingProps> = ({ onSelectPackage }) => {
           {/* BUSINESS CARD (Visually Dominant / Most Preferred) */}
           <div
             id="pricing-card-business"
-            className="relative rounded-2xl bg-[#181918] border border-[#C6A76A]/50 p-6 sm:p-7 flex flex-col justify-between shadow-2xl lg:-translate-y-2 transition-all"
+            className="w-full min-w-0 relative rounded-2xl bg-[#181918] border border-[#C6A76A]/50 p-4.5 sm:p-6 lg:p-7 flex flex-col justify-between shadow-2xl lg:-translate-y-2 transition-all mt-4 lg:mt-0"
           >
             {/* Top Dominant Badge */}
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3.5 py-0.5 rounded-full bg-[#C6A76A] text-[#111211] text-[10px] font-bold uppercase tracking-wider shadow-md flex items-center gap-1 font-mono">
-              <Sparkles className="w-3 h-3" />
-              <span>{BUSINESS.badge}</span>
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-[#C6A76A] text-[#111211] text-[10px] font-bold uppercase tracking-wider shadow-md flex items-center gap-1 font-mono max-w-[calc(100%-2rem)]">
+              <Sparkles className="w-3 h-3 shrink-0" />
+              <span className="truncate">{BUSINESS.badge}</span>
             </div>
 
             <div>
-              <div className="flex items-center justify-between mb-3 pt-1">
-                <span className="text-xs font-bold text-[#C6A76A] tracking-wider font-mono">
+              <div className="flex items-center justify-between mb-3 pt-1 gap-2">
+                <span className="text-xs font-bold text-[#C6A76A] tracking-wider font-mono truncate">
                   {BUSINESS.name}
                 </span>
-                <span className="text-[11px] text-[#AAA69D] font-medium">Büyüyen İşletmeler</span>
+                <span className="text-[11px] text-[#AAA69D] font-medium shrink-0">Büyüyen İşletmeler</span>
               </div>
 
               <div className="mb-3">
@@ -137,7 +137,7 @@ export const Pricing: React.FC<PricingProps> = ({ onSelectPackage }) => {
               <button
                 onClick={() => onSelectPackage(BUSINESS.name)}
                 id="btn-business-demo"
-                className="w-full py-3 px-4 rounded-xl bg-[#F3F0E8] hover:bg-[#C6A76A] text-[#111211] text-xs font-semibold tracking-wide flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer shadow-sm"
+                className="w-full min-h-[44px] py-3 px-4 rounded-xl bg-[#F3F0E8] hover:bg-[#C6A76A] text-[#111211] text-xs font-semibold tracking-wide flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer shadow-sm"
               >
                 <span>{BUSINESS.ctaText}</span>
                 <ArrowRight className="w-3.5 h-3.5 text-[#111211]" />
@@ -148,14 +148,14 @@ export const Pricing: React.FC<PricingProps> = ({ onSelectPackage }) => {
           {/* AI BUSINESS CARD */}
           <div
             id="pricing-card-aibusiness"
-            className="rounded-2xl bg-[#141514] border border-[#F3F0E8]/[0.09] p-6 sm:p-7 flex flex-col justify-between hover:border-[#F3F0E8]/[0.18] transition-all shadow-xl"
+            className="w-full min-w-0 rounded-2xl bg-[#141514] border border-[#F3F0E8]/[0.09] p-4.5 sm:p-6 lg:p-7 flex flex-col justify-between hover:border-[#F3F0E8]/[0.18] transition-all shadow-xl"
           >
             <div>
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-xs font-bold text-[#AAA69D] tracking-wider font-mono">
+              <div className="flex items-center justify-between mb-3 gap-2">
+                <span className="text-xs font-bold text-[#AAA69D] tracking-wider font-mono truncate">
                   {AI_BUSINESS.name}
                 </span>
-                <span className="text-[11px] text-[#74716A] font-medium">Gelişmiş AI Entegrasyonları</span>
+                <span className="text-[11px] text-[#74716A] font-medium shrink-0">Gelişmiş AI</span>
               </div>
 
               <div className="mb-3">
@@ -190,7 +190,7 @@ export const Pricing: React.FC<PricingProps> = ({ onSelectPackage }) => {
               <button
                 onClick={() => onSelectPackage(AI_BUSINESS.name)}
                 id="btn-aibusiness-demo"
-                className="w-full py-2.5 px-4 rounded-xl bg-[#181918] hover:bg-[#1D1E1C] text-[#F3F0E8] hover:text-white text-xs font-medium tracking-wide flex items-center justify-center gap-2 border border-[#F3F0E8]/[0.15] transition-all duration-200 cursor-pointer"
+                className="w-full min-h-[44px] py-2.5 px-4 rounded-xl bg-[#181918] hover:bg-[#1D1E1C] text-[#F3F0E8] hover:text-white text-xs font-medium tracking-wide flex items-center justify-center gap-2 border border-[#F3F0E8]/[0.15] transition-all duration-200 cursor-pointer"
               >
                 <span>{AI_BUSINESS.ctaText}</span>
                 <ArrowRight className="w-3.5 h-3.5 text-[#AAA69D]" />

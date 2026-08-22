@@ -132,10 +132,10 @@ Not: ${formData.note.trim() || '-'}`;
   };
 
   return (
-    <section id="demo-talep" className="py-16 md:py-20 bg-[#090A0A] border-t border-[#F3F0E8]/[0.06] relative" ref={formRef}>
+    <section id="demo-talep" className="py-16 md:py-20 bg-[#090A0A] border-t border-[#F3F0E8]/[0.06] relative overflow-hidden" ref={formRef}>
       
       {/* Background depth */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[550px] h-[300px] bg-[#141514] rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[320px] sm:w-[550px] h-[300px] bg-[#141514] rounded-full blur-3xl pointer-events-none -z-10" />
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
@@ -159,7 +159,7 @@ Not: ${formData.note.trim() || '-'}`;
         </div>
 
         {/* The Form Container */}
-        <div className="rounded-2xl bg-[#141514] border border-[#F3F0E8]/[0.09] p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+        <div className="rounded-2xl bg-[#141514] border border-[#F3F0E8]/[0.09] p-4.5 sm:p-7 md:p-8 shadow-2xl relative overflow-hidden w-full max-w-full">
           
           {submissionSuccess ? (
             /* Success State */
@@ -232,7 +232,7 @@ Not: ${formData.note.trim() || '-'}`;
                     placeholder="Örn: Ahmet Yılmaz"
                     value={formData.fullName}
                     onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                    className={`w-full px-3.5 py-2.5 rounded-xl bg-[#0E0F0F] border text-xs sm:text-sm text-[#F3F0E8] placeholder-[#74716A] focus:outline-none focus:border-[#C6A76A] transition-all ${
+                    className={`w-full px-3.5 py-2.5 rounded-xl bg-[#0E0F0F] border text-base sm:text-sm text-[#F3F0E8] placeholder-[#74716A] focus:outline-none focus:border-[#C6A76A] transition-all ${
                       errors.fullName ? 'border-rose-500/80' : 'border-[#F3F0E8]/[0.09] hover:border-[#F3F0E8]/[0.18]'
                     }`}
                   />
@@ -256,7 +256,7 @@ Not: ${formData.note.trim() || '-'}`;
                     placeholder="Örn: Yılmaz Otomotiv / Aura Klinik"
                     value={formData.businessName}
                     onChange={(e) => setFormData({ ...formData, businessName: e.target.value })}
-                    className={`w-full px-3.5 py-2.5 rounded-xl bg-[#0E0F0F] border text-xs sm:text-sm text-[#F3F0E8] placeholder-[#74716A] focus:outline-none focus:border-[#C6A76A] transition-all ${
+                    className={`w-full px-3.5 py-2.5 rounded-xl bg-[#0E0F0F] border text-base sm:text-sm text-[#F3F0E8] placeholder-[#74716A] focus:outline-none focus:border-[#C6A76A] transition-all ${
                       errors.businessName ? 'border-rose-500/80' : 'border-[#F3F0E8]/[0.09] hover:border-[#F3F0E8]/[0.18]'
                     }`}
                   />
@@ -280,7 +280,7 @@ Not: ${formData.note.trim() || '-'}`;
                     placeholder="Örn: Restoran, Oto Galeri, Sağlık, Hukuk"
                     value={formData.industry}
                     onChange={(e) => setFormData({ ...formData, industry: e.target.value })}
-                    className={`w-full px-3.5 py-2.5 rounded-xl bg-[#0E0F0F] border text-xs sm:text-sm text-[#F3F0E8] placeholder-[#74716A] focus:outline-none focus:border-[#C6A76A] transition-all ${
+                    className={`w-full px-3.5 py-2.5 rounded-xl bg-[#0E0F0F] border text-base sm:text-sm text-[#F3F0E8] placeholder-[#74716A] focus:outline-none focus:border-[#C6A76A] transition-all ${
                       errors.industry ? 'border-rose-500/80' : 'border-[#F3F0E8]/[0.09] hover:border-[#F3F0E8]/[0.18]'
                     }`}
                   />
@@ -304,7 +304,7 @@ Not: ${formData.note.trim() || '-'}`;
                     placeholder="Örn: 05XX XXX XX XX"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className={`w-full px-3.5 py-2.5 rounded-xl bg-[#0E0F0F] border text-xs sm:text-sm text-[#F3F0E8] placeholder-[#74716A] focus:outline-none focus:border-[#C6A76A] transition-all ${
+                    className={`w-full px-3.5 py-2.5 rounded-xl bg-[#0E0F0F] border text-base sm:text-sm text-[#F3F0E8] placeholder-[#74716A] focus:outline-none focus:border-[#C6A76A] transition-all ${
                       errors.phone ? 'border-rose-500/80' : 'border-[#F3F0E8]/[0.09] hover:border-[#F3F0E8]/[0.18]'
                     }`}
                   />
@@ -331,7 +331,7 @@ Not: ${formData.note.trim() || '-'}`;
                     placeholder="Örn: www.isletmeniz.com"
                     value={formData.website}
                     onChange={(e) => setFormData({ ...formData, website: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#0E0F0F] border border-[#F3F0E8]/[0.09] hover:border-[#F3F0E8]/[0.18] text-xs sm:text-sm text-[#F3F0E8] placeholder-[#74716A] focus:outline-none focus:border-[#C6A76A] transition-all"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#0E0F0F] border border-[#F3F0E8]/[0.09] hover:border-[#F3F0E8]/[0.18] text-base sm:text-sm text-[#F3F0E8] placeholder-[#74716A] focus:outline-none focus:border-[#C6A76A] transition-all"
                   />
                 </div>
 
@@ -350,7 +350,7 @@ Not: ${formData.note.trim() || '-'}`;
                     placeholder="Örn: @isletmeniz"
                     value={formData.instagram}
                     onChange={(e) => setFormData({ ...formData, instagram: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#0E0F0F] border border-[#F3F0E8]/[0.09] hover:border-[#F3F0E8]/[0.18] text-xs sm:text-sm text-[#F3F0E8] placeholder-[#74716A] focus:outline-none focus:border-[#C6A76A] transition-all"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#0E0F0F] border border-[#F3F0E8]/[0.09] hover:border-[#F3F0E8]/[0.18] text-base sm:text-sm text-[#F3F0E8] placeholder-[#74716A] focus:outline-none focus:border-[#C6A76A] transition-all"
                   />
                 </div>
 
@@ -361,21 +361,21 @@ Not: ${formData.note.trim() || '-'}`;
                 <label className="text-xs font-semibold text-[#AAA69D] block">
                   İlgilendiğiniz Paket:
                 </label>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2.5 w-full">
                   {packageOptions.map((pkg) => (
                     <button
                       type="button"
                       key={pkg.value}
                       onClick={() => setFormData({ ...formData, selectedPackage: pkg.value })}
-                      className={`p-2.5 rounded-xl text-left text-xs font-medium border transition-all cursor-pointer flex items-center justify-between ${
+                      className={`w-full min-w-0 min-h-[44px] px-2 sm:px-2.5 py-2 rounded-xl text-left text-xs font-medium border transition-all cursor-pointer flex items-center justify-between gap-1 ${
                         formData.selectedPackage === pkg.value
                           ? 'bg-[#181918] border-[#C6A76A] text-[#F3F0E8] shadow-sm'
                           : 'bg-[#0E0F0F] border-[#F3F0E8]/[0.09] text-[#AAA69D] hover:text-[#F3F0E8] hover:border-[#F3F0E8]/[0.18]'
                       }`}
                     >
-                      <span className="truncate">{pkg.label}</span>
+                      <span className="truncate text-[10.5px] sm:text-xs">{pkg.label}</span>
                       {formData.selectedPackage === pkg.value && (
-                        <Check className="w-3.5 h-3.5 text-[#C6A76A] shrink-0 ml-1" />
+                        <Check className="w-3.5 h-3.5 text-[#C6A76A] shrink-0" />
                       )}
                     </button>
                   ))}
@@ -397,19 +397,19 @@ Not: ${formData.note.trim() || '-'}`;
                   placeholder="Örnek: Sitemizde online randevu butonu ve WhatsApp danışma hattı olmasını istiyoruz..."
                   value={formData.note}
                   onChange={(e) => setFormData({ ...formData, note: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#0E0F0F] border border-[#F3F0E8]/[0.09] hover:border-[#F3F0E8]/[0.18] text-xs sm:text-sm text-[#F3F0E8] placeholder-[#74716A] focus:outline-none focus:border-[#C6A76A] transition-all resize-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#0E0F0F] border border-[#F3F0E8]/[0.09] hover:border-[#F3F0E8]/[0.18] text-base sm:text-sm text-[#F3F0E8] placeholder-[#74716A] focus:outline-none focus:border-[#C6A76A] transition-all resize-none"
                 />
               </div>
 
               {/* Checkbox: İletişim İzni */}
               <div className="text-left pt-1">
-                <label className="flex items-start gap-2.5 cursor-pointer select-none">
+                <label className="flex items-start gap-2.5 cursor-pointer select-none py-1">
                   <input
                     type="checkbox"
                     id="form-terms"
                     checked={formData.termsAccepted}
                     onChange={(e) => setFormData({ ...formData, termsAccepted: e.target.checked })}
-                    className="mt-0.5 w-4 h-4 rounded bg-[#0E0F0F] border-[#F3F0E8]/[0.15] accent-[#C6A76A] transition-colors"
+                    className="mt-0.5 w-4 h-4 min-w-[16px] min-h-[16px] rounded bg-[#0E0F0F] border-[#F3F0E8]/[0.15] accent-[#C6A76A] transition-colors"
                   />
                   <span className="text-xs text-[#AAA69D] leading-tight">
                     İşletmem için ücretsiz web sitesi demosu hazırlanması amacıyla WhatsApp veya telefon üzerinden benimle iletişime geçilmesini kabul ediyorum.
@@ -429,7 +429,7 @@ Not: ${formData.note.trim() || '-'}`;
                   type="submit"
                   disabled={isSubmitting}
                   id="form-submit-btn"
-                  className="w-full py-3.5 px-6 rounded-xl bg-[#F3F0E8] hover:bg-[#C6A76A] text-[#111211] hover:text-[#111211] font-semibold text-xs sm:text-sm tracking-wide flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full min-h-[48px] py-3.5 px-6 rounded-xl bg-[#F3F0E8] hover:bg-[#C6A76A] text-[#111211] hover:text-[#111211] font-semibold text-xs sm:text-sm tracking-wide flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <Send className="w-4 h-4" />
                   <span>{isSubmitting ? 'Talebiniz Hazırlanıyor...' : 'Ücretsiz Demo Talep Et'}</span>

@@ -27,7 +27,7 @@ export const DemoModal: React.FC<DemoModalProps> = ({ demo, onClose, onRequestSi
         <button
           onClick={onClose}
           id="close-demo-modal-btn"
-          className="absolute top-4 right-4 p-2 rounded-xl text-[#AAA69D] hover:text-[#F3F0E8] hover:bg-[#181918] transition-colors cursor-pointer border border-transparent hover:border-[#F3F0E8]/[0.09]"
+          className="absolute top-3.5 right-3.5 sm:top-4 sm:right-4 w-10 h-10 sm:w-11 sm:h-11 rounded-xl text-[#AAA69D] hover:text-[#F3F0E8] hover:bg-[#181918] flex items-center justify-center transition-colors cursor-pointer border border-transparent hover:border-[#F3F0E8]/[0.09]"
           aria-label="Kapat"
         >
           <X className="w-5 h-5" />
@@ -37,10 +37,11 @@ export const DemoModal: React.FC<DemoModalProps> = ({ demo, onClose, onRequestSi
           
           {/* Header Tag */}
           <div className="flex items-center gap-2">
-            <span className="px-2.5 py-1 rounded-full bg-[#181918] border border-[#F3F0E8]/[0.09] text-[#AAA69D] text-[10px] font-mono uppercase tracking-[0.14em]">
-              Konsept Çalışması
+            <span className="px-2.5 py-1 rounded-full bg-[#181918] border border-[#C6A76A]/30 text-[#C6A76A] text-[10px] font-mono uppercase tracking-[0.14em] flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C6A76A]" />
+              Canlı Demo Yayında
             </span>
-            <span className="text-xs text-[#C6A76A] font-medium">
+            <span className="text-xs text-[#AAA69D] font-medium">
               {demo.category}
             </span>
           </div>
@@ -58,11 +59,11 @@ export const DemoModal: React.FC<DemoModalProps> = ({ demo, onClose, onRequestSi
           <div className="p-4 rounded-xl bg-[#181918] border border-[#C6A76A]/30 flex items-start gap-3">
             <span className="w-2 h-2 rounded-full bg-[#C6A76A] shrink-0 mt-1.5" />
             <div className="space-y-1">
-              <div className="text-sm font-semibold text-[#F3F0E8]">
-                Tam interaktif demo hazırlanıyor.
+              <div className="text-sm font-semibold text-[#F3F0E8] flex items-center gap-2">
+                <span>İnteraktif Canlı Demo Yayında</span>
               </div>
               <p className="text-xs text-[#AAA69D] leading-relaxed">
-                Bu sektör veya kendi işletmeniz için birebir uyarlanmış ücretsiz ana sayfa demosunu 24-48 saat içinde özel olarak hazırlayabiliriz.
+                Bu canlı çalışmayı yeni sekmede doğrudan test edebilir veya kendi işletmeniz için birebir uyarlanmış ücretsiz ana sayfa demosunu 24-48 saat içinde talep edebilirsiniz.
               </p>
             </div>
           </div>
@@ -107,7 +108,7 @@ export const DemoModal: React.FC<DemoModalProps> = ({ demo, onClose, onRequestSi
               href={demo.demoUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-2.5 rounded-xl bg-[#181918] hover:bg-[#1D1E1C] text-[#F3F0E8] border border-[#F3F0E8]/[0.15] text-xs font-medium flex items-center justify-center gap-1.5 transition-all"
+              className="min-h-[44px] px-4 py-2.5 rounded-xl bg-[#181918] hover:bg-[#1D1E1C] text-[#F3F0E8] border border-[#F3F0E8]/[0.15] text-xs font-medium flex items-center justify-center gap-1.5 transition-all"
             >
               <ExternalLink className="w-4 h-4" />
               <span>Canlı Sayfayı Aç</span>
@@ -118,7 +119,7 @@ export const DemoModal: React.FC<DemoModalProps> = ({ demo, onClose, onRequestSi
             href={getWhatsAppUrl(`Merhaba, ${demo.title} konseptinizi inceledim. Benim işletmem için de benzer bir ücretsiz demo hazırlayabilir misiniz?`)}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-4 py-2.5 rounded-xl bg-[#181918] hover:bg-[#1D1E1C] text-[#F3F0E8] hover:text-white border border-[#F3F0E8]/[0.15] text-xs font-medium flex items-center justify-center gap-2 transition-all"
+            className="min-h-[44px] px-4 py-2.5 rounded-xl bg-[#181918] hover:bg-[#1D1E1C] text-[#F3F0E8] hover:text-white border border-[#F3F0E8]/[0.15] text-xs font-medium flex items-center justify-center gap-2 transition-all"
           >
             <MessageCircle className="w-4 h-4 text-[#25D366]" />
             <span>WhatsApp ile Sor</span>
@@ -130,7 +131,7 @@ export const DemoModal: React.FC<DemoModalProps> = ({ demo, onClose, onRequestSi
               onRequestSimilar(demo.category);
             }}
             id="modal-request-demo-btn"
-            className="px-5 py-2.5 rounded-xl bg-[#F3F0E8] hover:bg-[#C6A76A] text-[#111211] text-xs font-semibold tracking-wide flex items-center justify-center gap-2 transition-all cursor-pointer shadow-sm"
+            className="min-h-[44px] px-5 py-2.5 rounded-xl bg-[#F3F0E8] hover:bg-[#C6A76A] text-[#111211] text-xs font-semibold tracking-wide flex items-center justify-center gap-2 transition-all cursor-pointer shadow-sm"
           >
             <span>İşletmeme Özel Demo İste</span>
             <ArrowRight className="w-4 h-4" />

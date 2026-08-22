@@ -34,7 +34,7 @@ export const ProblemValue: React.FC = () => {
   ];
 
   return (
-    <section id="faydalar" className="py-16 md:py-20 bg-[#090A0A] relative">
+    <section id="faydalar" className="py-16 md:py-20 bg-[#090A0A] relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}

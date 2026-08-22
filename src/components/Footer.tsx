@@ -32,7 +32,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenLegal, onDemoClick }) => {
   };
 
   return (
-    <footer id="footer" className="bg-[#090A0A] border-t border-[#F3F0E8]/[0.06] pt-14 pb-10 text-[#AAA69D] text-xs">
+    <footer id="footer" className="bg-[#090A0A] border-t border-[#F3F0E8]/[0.06] pt-14 pb-10 text-[#AAA69D] text-xs relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-[#F3F0E8]/[0.06]">
@@ -68,7 +68,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenLegal, onDemoClick }) => {
                   <a
                     href={link.href}
                     onClick={(e) => handleLinkClick(e, link.href)}
-                    className="text-[#AAA69D] hover:text-[#F3F0E8] transition-colors"
+                    className="text-[#AAA69D] hover:text-[#F3F0E8] transition-colors py-1 inline-block"
                   >
                     {link.label}
                   </a>
@@ -77,7 +77,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenLegal, onDemoClick }) => {
               <li>
                 <button
                   onClick={onDemoClick}
-                  className="text-[#F3F0E8] hover:text-[#C6A76A] font-medium transition-colors cursor-pointer"
+                  className="text-[#F3F0E8] hover:text-[#C6A76A] font-medium transition-colors cursor-pointer py-1 inline-block"
                 >
                   Ücretsiz Demo İste →
                 </button>
@@ -134,30 +134,30 @@ export const Footer: React.FC<FooterProps> = ({ onOpenLegal, onDemoClick }) => {
 
         {/* Bottom Legal & Copyright */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[#74716A]">
-          <div>
+          <div className="text-center sm:text-left">
             © {currentYear} {CONFIG.BRAND_NAME}. Tüm hakları saklıdır.
           </div>
 
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-4 sm:gap-6">
             <button
               onClick={() => onOpenLegal('gizlilik')}
-              className="hover:text-[#F3F0E8] transition-colors cursor-pointer"
+              className="py-1 px-1.5 hover:text-[#F3F0E8] transition-colors cursor-pointer text-xs"
             >
               Gizlilik
             </button>
             <button
               onClick={() => onOpenLegal('kvkk')}
-              className="hover:text-[#F3F0E8] transition-colors cursor-pointer"
+              className="py-1 px-1.5 hover:text-[#F3F0E8] transition-colors cursor-pointer text-xs"
             >
               KVKK
             </button>
             <button
               onClick={scrollToTop}
-              className="p-1.5 rounded-lg bg-[#141514] hover:bg-[#181918] border border-[#F3F0E8]/[0.09] text-[#AAA69D] hover:text-[#F3F0E8] transition-colors cursor-pointer"
+              className="w-9 h-9 rounded-lg bg-[#141514] hover:bg-[#181918] border border-[#F3F0E8]/[0.09] text-[#AAA69D] hover:text-[#F3F0E8] flex items-center justify-center transition-colors cursor-pointer"
               title="Yukarı Çık"
               aria-label="Yukarı Çık"
             >
-              <ArrowUp className="w-3.5 h-3.5" />
+              <ArrowUp className="w-4 h-4" />
             </button>
           </div>
         </div>

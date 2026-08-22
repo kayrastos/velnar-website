@@ -38,12 +38,12 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#090A0A] text-[#F3F0E8] flex flex-col font-sans selection:bg-[#C6A76A]/30 selection:text-[#F3F0E8] antialiased">
+    <div className="min-h-screen w-full max-w-full overflow-x-hidden bg-[#090A0A] text-[#F3F0E8] flex flex-col font-sans selection:bg-[#C6A76A]/30 selection:text-[#F3F0E8] antialiased">
       {/* Sticky Header */}
       <Navbar onDemoClick={scrollToDemoForm} />
 
       {/* Main Content Sections - Reordered and Shortened */}
-      <main className="flex-1">
+      <main className="flex-1 w-full max-w-full overflow-x-hidden">
         {/* 1. Hero */}
         <Hero onDemoClick={scrollToDemoForm} />
         

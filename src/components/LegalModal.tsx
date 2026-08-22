@@ -24,7 +24,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ type, onClose }) => {
         {/* Top close button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 rounded-xl text-[#AAA69D] hover:text-[#F3F0E8] hover:bg-[#181918] transition-colors cursor-pointer border border-transparent hover:border-[#F3F0E8]/[0.09]"
+          className="absolute top-3.5 right-3.5 sm:top-4 sm:right-4 w-10 h-10 sm:w-11 sm:h-11 rounded-xl text-[#AAA69D] hover:text-[#F3F0E8] hover:bg-[#181918] flex items-center justify-center transition-colors cursor-pointer border border-transparent hover:border-[#F3F0E8]/[0.09]"
           aria-label="Kapat"
         >
           <X className="w-5 h-5" />
@@ -79,7 +79,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ type, onClose }) => {
         <div className="pt-4 mt-4 border-t border-[#F3F0E8]/[0.06] flex justify-end">
           <button
             onClick={onClose}
-            className="px-5 py-2.5 rounded-xl bg-[#181918] hover:bg-[#1D1E1C] border border-[#F3F0E8]/[0.15] text-[#F3F0E8] text-xs font-semibold cursor-pointer transition-all"
+            className="w-full sm:w-auto min-h-[44px] px-5 py-2.5 rounded-xl bg-[#181918] hover:bg-[#1D1E1C] border border-[#F3F0E8]/[0.15] text-[#F3F0E8] text-xs font-semibold cursor-pointer transition-all flex items-center justify-center"
           >
             Anladım & Kapat
           </button>

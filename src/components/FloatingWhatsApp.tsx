@@ -20,7 +20,10 @@ export const FloatingWhatsApp: React.FC = () => {
   }, []);
 
   return (
-    <div id="floating-whatsapp-widget" className="fixed bottom-5 right-5 z-40 flex items-center gap-2.5 pointer-events-none">
+    <div 
+      id="floating-whatsapp-widget" 
+      className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 flex items-center gap-2.5 pointer-events-none pb-[env(safe-area-inset-bottom,0)] pr-[env(safe-area-inset-right,0)] max-w-[calc(100vw-2rem)]"
+    >
       {/* Small subtle popover tooltip (auto timed) */}
       {showTooltip && (
         <div className="pointer-events-auto hidden sm:flex items-center gap-2 bg-[#141514] text-[#F3F0E8] text-xs py-2 px-3 rounded-xl border border-[#F3F0E8]/[0.15] shadow-2xl backdrop-blur-md animate-fadeIn">
@@ -42,11 +45,11 @@ export const FloatingWhatsApp: React.FC = () => {
         target="_blank"
         rel="noopener noreferrer"
         id="floating-whatsapp-btn"
-        className="pointer-events-auto w-12 h-12 sm:w-13 sm:h-13 rounded-full bg-[#141514] hover:bg-[#1D1E1C] text-[#25D366] flex items-center justify-center border border-[#F3F0E8]/[0.15] hover:border-[#F3F0E8]/[0.3] shadow-2xl transition-all duration-200 cursor-pointer group hover:scale-105 active:scale-95"
+        className="pointer-events-auto w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#141514] hover:bg-[#1D1E1C] text-[#25D366] flex items-center justify-center border border-[#F3F0E8]/[0.15] hover:border-[#F3F0E8]/[0.3] shadow-2xl transition-all duration-200 cursor-pointer group hover:scale-105 active:scale-95"
         aria-label="WhatsApp ile Sohbet Başlat"
         title="WhatsApp ile İletişime Geç"
       >
-        <MessageCircle className="w-6 h-6 sm:w-6.5 sm:h-6.5 text-[#25D366] transition-transform group-hover:scale-110" />
+        <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6 text-[#25D366] transition-transform group-hover:scale-110" />
       </a>
     </div>
   );

@@ -19,6 +19,21 @@ export const Navbar: React.FC<NavbarProps> = ({ onDemoClick }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Lock body scroll when mobile drawer is active to prevent background scroll
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.touchAction = 'none';
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+    };
+  }, [mobileMenuOpen]);
+
   const navLinks = [
     { label: 'Demolar', href: '#demolar' },
     { label: 'Faydalar', href: '#faydalar' },
@@ -39,14 +54,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onDemoClick }) => {
   return (
     <header
       id="main-navbar"
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 w-full max-w-full z-50 transition-all duration-300 box-border ${
         isScrolled
           ? 'bg-[#090A0A]/90 backdrop-blur-xl border-b border-[#F3F0E8]/[0.09] shadow-[0_4px_30px_rgba(0,0,0,0.6)] py-3'
           : 'bg-transparent border-b border-transparent py-4 sm:py-5'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div className="flex items-center justify-between w-full">
           {/* VELNAR Brand Lockup */}
           <a
             href="#"
@@ -103,11 +118,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onDemoClick }) => {
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             id="mobile-menu-toggle"
-            className="md:hidden p-2 rounded-xl text-[#AAA69D] hover:text-[#F3F0E8] hover:bg-[#141514] border border-transparent hover:border-[#F3F0E8]/[0.09] transition-colors cursor-pointer"
+            className="md:hidden min-w-[44px] min-h-[44px] p-2.5 rounded-xl text-[#AAA69D] hover:text-[#F3F0E8] hover:bg-[#141514] active:bg-[#181918] border border-transparent hover:border-[#F3F0E8]/[0.09] transition-colors cursor-pointer flex items-center justify-center"
             aria-label="Menüyü Aç/Kapat"
             aria-expanded={mobileMenuOpen}
           >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {mobileMenuOpen ? <X className="w-5 h-5 text-[#F3F0E8]" /> : <Menu className="w-5 h-5 text-[#F3F0E8]" />}
           </button>
         </div>
       </div>
@@ -116,7 +131,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onDemoClick }) => {
       {mobileMenuOpen && (
         <div
           id="mobile-menu-drawer"
-          className="md:hidden bg-[#0E0F0F]/98 backdrop-blur-2xl border-b border-[#F3F0E8]/[0.09] px-5 pt-4 pb-6 mt-3 shadow-2xl transition-all"
+          className="md:hidden bg-[#0E0F0F]/98 backdrop-blur-2xl border-b border-[#F3F0E8]/[0.09] px-4 sm:px-5 pt-4 pb-6 mt-3 shadow-2xl transition-all max-h-[calc(100vh-80px)] overflow-y-auto w-full max-w-full box-border"
         >
           <div className="flex flex-col space-y-3 text-sm font-medium">
             {navLinks.map((link) => (
@@ -124,7 +139,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onDemoClick }) => {
                 key={link.href}
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
-                className="text-[#AAA69D] hover:text-[#F3F0E8] py-2 border-b border-[#F3F0E8]/[0.05] flex items-center justify-between"
+                className="text-[#AAA69D] hover:text-[#F3F0E8] py-2.5 min-h-[44px] border-b border-[#F3F0E8]/[0.05] flex items-center justify-between"
               >
                 <span>{link.label}</span>
                 <span className="text-xs text-[#74716A] font-mono">→</span>
@@ -138,7 +153,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onDemoClick }) => {
                   onDemoClick();
                 }}
                 id="mobile-demo-btn"
-                className="w-full py-2.5 px-4 rounded-xl bg-[#F3F0E8] hover:bg-[#C6A76A] text-[#111211] font-bold text-xs flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                className="w-full min-h-[44px] py-3 px-4 rounded-xl bg-[#F3F0E8] hover:bg-[#C6A76A] text-[#111211] font-bold text-xs flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-sm"
               >
                 <span>Ücretsiz Demo İste</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -149,7 +164,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onDemoClick }) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 id="mobile-whatsapp-btn"
-                className="w-full py-2.5 px-4 rounded-xl bg-[#141514] border border-[#F3F0E8]/[0.15] hover:bg-[#1D1E1C] text-[#F3F0E8] font-medium text-xs flex items-center justify-center gap-2 transition-colors"
+                className="w-full min-h-[44px] py-3 px-4 rounded-xl bg-[#141514] border border-[#F3F0E8]/[0.15] hover:bg-[#1D1E1C] text-[#F3F0E8] font-medium text-xs flex items-center justify-center gap-2 transition-colors"
               >
                 <MessageCircle className="w-3.5 h-3.5 text-[#25D366]" />
                 <span>WhatsApp'tan Görüşelim</span>

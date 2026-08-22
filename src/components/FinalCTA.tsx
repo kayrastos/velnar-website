@@ -11,7 +11,7 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({ onDemoClick }) => {
     <section id="final-cta" className="py-16 md:py-20 bg-[#0E0F0F] border-y border-[#F3F0E8]/[0.06] relative overflow-hidden">
       
       {/* Subtle depth */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[250px] bg-[#141514] rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] sm:w-[500px] h-[250px] bg-[#141514] rounded-full blur-3xl pointer-events-none -z-10" />
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
         
@@ -39,7 +39,7 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({ onDemoClick }) => {
           <button
             onClick={onDemoClick}
             id="final-cta-demo-btn"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-[#F3F0E8] hover:bg-[#C6A76A] text-[#111211] hover:text-[#111211] font-semibold text-xs sm:text-sm tracking-wide transition-all duration-200 cursor-pointer shadow-sm group"
+            className="w-full sm:w-auto min-h-[44px] inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-[#F3F0E8] hover:bg-[#C6A76A] text-[#111211] hover:text-[#111211] font-semibold text-xs sm:text-sm tracking-wide transition-all duration-200 cursor-pointer shadow-sm group"
           >
             <span>Ücretsiz Demo İste</span>
             <ArrowRight className="w-4 h-4 text-[#111211] group-hover:translate-x-1 transition-transform" />
@@ -50,7 +50,7 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({ onDemoClick }) => {
             target="_blank"
             rel="noopener noreferrer"
             id="final-cta-whatsapp-btn"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#141514] hover:bg-[#1D1E1C] text-[#F3F0E8] hover:text-white font-medium text-xs sm:text-sm border border-[#F3F0E8]/[0.15] transition-all duration-200 shadow-sm"
+            className="w-full sm:w-auto min-h-[44px] inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#141514] hover:bg-[#1D1E1C] text-[#F3F0E8] hover:text-white font-medium text-xs sm:text-sm border border-[#F3F0E8]/[0.15] transition-all duration-200 shadow-sm"
           >
             <MessageCircle className="w-4 h-4 text-[#25D366]" />
             <span>WhatsApp</span>

@@ -38,7 +38,7 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onDemoClick }) => {
     <section id="surec" className="py-16 md:py-20 bg-[#0E0F0F] border-y border-[#F3F0E8]/[0.06] relative overflow-hidden">
       
       {/* Subtle depth */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[200px] bg-[#141514] blur-3xl pointer-events-none -z-10" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] sm:w-[500px] h-[200px] bg-[#141514] blur-3xl pointer-events-none -z-10" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
@@ -138,7 +138,7 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onDemoClick }) => {
           <button
             onClick={onDemoClick}
             id="how-it-works-cta-btn"
-            className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-[#F3F0E8] hover:bg-[#C6A76A] text-[#111211] text-xs font-semibold transition-all duration-200 shadow-sm cursor-pointer shrink-0"
+            className="w-full sm:w-auto min-h-[44px] px-5 py-2.5 rounded-xl bg-[#F3F0E8] hover:bg-[#C6A76A] text-[#111211] text-xs font-semibold flex items-center justify-center transition-all duration-200 shadow-sm cursor-pointer shrink-0"
           >
             Hemen Demo İste
           </button>

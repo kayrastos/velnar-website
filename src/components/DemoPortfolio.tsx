@@ -17,9 +17,9 @@ export const DemoPortfolio: React.FC<DemoPortfolioProps> = ({ onSelectDemo, onDe
     {
       id: 'demo-otomotiv',
       category: 'Otomotiv',
-      title: 'Premium Oto Galeri',
+      title: 'Aurel Motors',
       description: 'Lüks araç vitrini, akıllı filtreleme ve anlık WhatsApp ekspertiz hattı.',
-      demoUrl: '', // Ready for future live URL
+      demoUrl: 'https://aurel-motors.ai.studio',
       features: [
         'Akıllı filtreli araç portföyü',
         'Tek tıkla WhatsApp ekspertiz hattı',
@@ -40,9 +40,9 @@ export const DemoPortfolio: React.FC<DemoPortfolioProps> = ({ onSelectDemo, onDe
     {
       id: 'demo-guzellik',
       category: 'Güzellik & Wellness',
-      title: 'Estetik & Güzellik Merkezi',
+      title: 'Lumera Beauty & Wellness',
       description: 'Hizmetleri öne çıkaran, güven oluşturan ve randevu akışını hızlandıran tasarım.',
-      demoUrl: '', // Ready for future live URL
+      demoUrl: 'https://lumera-beauty-wellness.ai.studio',
       features: [
         'Ayrıntılı seans & tedavi menüsü',
         'Öncesi / Sonrası sonuç galerisi',
@@ -63,9 +63,9 @@ export const DemoPortfolio: React.FC<DemoPortfolioProps> = ({ onSelectDemo, onDe
     {
       id: 'demo-restoran',
       category: 'Restoran',
-      title: 'Modern Restoran & Bistro',
+      title: 'Sera Restaurant',
       description: 'Mobil öncelikli QR menü, anlık masa rezervasyonu ve özel atmosfer sunumu.',
-      demoUrl: '', // Ready for future live URL
+      demoUrl: 'https://sera-restaurant-concept.ai.studio',
       features: [
         'Mobil uyumlu görsel dijital QR menü',
         'Anlık WhatsApp & telefon rezervasyonu',
@@ -85,17 +85,13 @@ export const DemoPortfolio: React.FC<DemoPortfolioProps> = ({ onSelectDemo, onDe
     }
   ];
 
-  const handleLiveDemoClick = (demo: DemoItem) => {
-    if (demo.demoUrl && demo.demoUrl.trim() !== '') {
-      window.open(demo.demoUrl, '_blank', 'noopener,noreferrer');
-    } else {
-      // Open the interactive preview modal
-      onSelectDemo(demo);
-    }
+  const getCleanDomain = (url?: string) => {
+    if (!url) return 'velnar.studio';
+    return url.replace('https://', '').replace('http://', '').replace(/\/$/, '');
   };
 
   return (
-    <section id="demolar" className="py-16 md:py-20 bg-[#0E0F0F] border-y border-[#F3F0E8]/[0.06] relative">
+    <section id="demolar" className="py-16 md:py-20 bg-[#0E0F0F] border-y border-[#F3F0E8]/[0.06] relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header - Strong Demo Principle */}
@@ -120,29 +116,35 @@ export const DemoPortfolio: React.FC<DemoPortfolioProps> = ({ onSelectDemo, onDe
               className="rounded-2xl bg-[#141514] border border-[#F3F0E8]/[0.09] hover:border-[#F3F0E8]/[0.18] transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-xl group hover:-translate-y-1"
             >
               
-              {/* Realistic Website / Browser Showcase Window */}
-              <div className="p-3.5 pb-0 bg-[#090A0A]">
-                
+              {/* Realistic Website / Browser Showcase Window (Clickable to open live demo) */}
+              <a
+                href={demo.demoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3.5 pb-0 bg-[#090A0A] block cursor-pointer group/preview"
+                title={`${demo.title} canlı demosunu yeni sekmede aç`}
+              >
                 {/* Browser Chrome Header */}
-                <div className="rounded-t-xl bg-[#0E0F0F] border border-b-0 border-[#F3F0E8]/[0.09] px-3.5 py-2 flex items-center justify-between">
+                <div className="rounded-t-xl bg-[#0E0F0F] border border-b-0 border-[#F3F0E8]/[0.09] px-3.5 py-2 flex items-center justify-between group-hover/preview:border-[#C6A76A]/40 transition-colors">
                   <div className="flex items-center gap-1.5">
                     <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f56]/80" />
                     <div className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]/80" />
                     <div className="w-2.5 h-2.5 rounded-full bg-[#27c93f]/80" />
-                    <div className="hidden sm:flex items-center gap-1 ml-2 px-2 py-0.5 bg-[#141514] rounded text-[10px] text-[#AAA69D] font-mono">
-                      <span>https://</span>
-                      <span className="text-[#F3F0E8]">{demo.id.replace('demo-', '')}.velnar.studio</span>
+                    <div className="flex items-center gap-1 ml-1.5 sm:ml-2 px-2 py-0.5 bg-[#141514] rounded text-[10px] text-[#AAA69D] font-mono truncate max-w-[120px] sm:max-w-none">
+                      <span className="hidden xs:inline">https://</span>
+                      <span className="text-[#F3F0E8] font-medium truncate">{getCleanDomain(demo.demoUrl)}</span>
                     </div>
                   </div>
                   
-                  {/* KONSEPT DEMO Label */}
-                  <div className="px-2 py-0.5 rounded bg-[#181918] border border-[#F3F0E8]/[0.09] text-[9px] font-mono uppercase tracking-wider text-[#AAA69D]">
-                    KONSEPT DEMO
+                  {/* CANLI DEMO Label */}
+                  <div className="px-2 py-0.5 rounded bg-[#181918] border border-[#C6A76A]/30 text-[9px] font-mono uppercase tracking-wider text-[#C6A76A] flex items-center gap-1 shrink-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#C6A76A] animate-pulse" />
+                    <span>CANLI DEMO</span>
                   </div>
                 </div>
 
                 {/* Simulated Realistic Website Body */}
-                <div className="bg-[#090A0A] border border-[#F3F0E8]/[0.09] border-t-0 p-4 text-left flex flex-col justify-between min-h-[220px] relative overflow-hidden transition-colors">
+                <div className="bg-[#090A0A] border border-[#F3F0E8]/[0.09] border-t-0 p-4 text-left flex flex-col justify-between min-h-[220px] relative overflow-hidden transition-colors group-hover/preview:border-[#C6A76A]/40">
                   
                   {/* Simulated Nav */}
                   <div className="flex items-center justify-between border-b border-[#F3F0E8]/[0.06] pb-2.5">
@@ -185,7 +187,7 @@ export const DemoPortfolio: React.FC<DemoPortfolioProps> = ({ onSelectDemo, onDe
 
                 </div>
 
-              </div>
+              </a>
 
               {/* Bottom Card Content & Actions */}
               <div className="p-5 sm:p-6 space-y-4 flex-1 flex flex-col justify-between">
@@ -217,19 +219,21 @@ export const DemoPortfolio: React.FC<DemoPortfolioProps> = ({ onSelectDemo, onDe
 
                 {/* Primary Actions: Canlı Demoyu Gör + Ücretsiz Demo İste */}
                 <div className="pt-4 border-t border-[#F3F0E8]/[0.06] flex items-center gap-2.5">
-                  <button
-                    onClick={() => handleLiveDemoClick(demo)}
+                  <a
+                    href={demo.demoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     id={`btn-live-demo-${demo.id}`}
-                    className="flex-1 py-2.5 px-3.5 rounded-xl bg-[#F3F0E8] hover:bg-[#C6A76A] text-[#111211] text-xs font-semibold flex items-center justify-center gap-1.5 transition-all duration-200 cursor-pointer shadow-sm"
+                    className="flex-1 min-h-[44px] py-2.5 px-3.5 rounded-xl bg-[#F3F0E8] hover:bg-[#C6A76A] text-[#111211] text-xs font-semibold flex items-center justify-center gap-1.5 transition-all duration-200 cursor-pointer shadow-sm"
                   >
                     <Eye className="w-3.5 h-3.5" />
                     <span>Canlı Demoyu Gör</span>
-                  </button>
+                  </a>
 
                   <button
                     onClick={onDemoClick}
                     id={`btn-request-demo-${demo.id}`}
-                    className="py-2.5 px-3.5 rounded-xl bg-[#141514] hover:bg-[#1D1E1C] text-[#F3F0E8] hover:text-white text-xs font-medium flex items-center justify-center gap-1 border border-[#F3F0E8]/[0.15] transition-all duration-200 cursor-pointer"
+                    className="min-h-[44px] py-2.5 px-3.5 rounded-xl bg-[#141514] hover:bg-[#1D1E1C] text-[#F3F0E8] hover:text-white text-xs font-medium flex items-center justify-center gap-1 border border-[#F3F0E8]/[0.15] transition-all duration-200 cursor-pointer"
                     title="İşletmeniz için ücretsiz demo isteyin"
                   >
                     <span>Demo İste</span>
@@ -245,7 +249,7 @@ export const DemoPortfolio: React.FC<DemoPortfolioProps> = ({ onSelectDemo, onDe
 
         {/* Transparent Boutique Note */}
         <div className="mt-8 text-center text-xs text-[#74716A] max-w-2xl mx-auto leading-relaxed">
-          * Yukarıdaki çalışmalar konsept demolarıdır. Her proje işletmenin ihtiyaçlarına göre özelleştirilir ve yayın öncesinde manuel olarak kontrol edilir.
+          * Yukarıdaki çalışmalar yayınlanmış canlı portföy demolarıdır. Her proje işletmenin ihtiyaçlarına ve kurumsal kimliğine göre özel olarak tasarlanır ve teslim edilir.
         </div>
 
       </div>

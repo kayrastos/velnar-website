@@ -56,16 +56,16 @@ export const Hero: React.FC<HeroProps> = ({ onDemoClick }) => {
   return (
     <section id="hero" className="relative pt-24 pb-14 md:pt-28 md:pb-16 overflow-hidden bg-[#090A0A]">
       {/* Background Subtle Depth */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-[#141514] rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] sm:w-[500px] h-[300px] bg-[#141514] rounded-full blur-3xl pointer-events-none -z-10" />
 
       {/* Grid pattern overlay with soft radial mask */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#F3F0E803_1px,transparent_1px),linear-gradient(to_bottom,#F3F0E803_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] -z-10 pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full max-w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center w-full">
           
           {/* Left Column: Copy & CTAs */}
-          <div className="lg:col-span-7 space-y-6 text-left">
+          <div className="lg:col-span-7 space-y-6 text-left w-full min-w-0">
             
             {/* Studio Eyebrow */}
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#141514] border border-[#F3F0E8]/[0.09]">
@@ -76,7 +76,7 @@ export const Hero: React.FC<HeroProps> = ({ onDemoClick }) => {
             </div>
 
             {/* Main Heading */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-extrabold tracking-tight text-[#F3F0E8] leading-[1.12]">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-extrabold tracking-tight text-[#F3F0E8] leading-[1.14] break-words">
               İşletmenizi internette{' '}
               <span className="text-[#C6A76A]">
                 daha güçlü gösteren
@@ -94,7 +94,7 @@ export const Hero: React.FC<HeroProps> = ({ onDemoClick }) => {
               <button
                 onClick={onDemoClick}
                 id="hero-primary-cta"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#F3F0E8] hover:bg-[#C6A76A] text-[#111211] hover:text-[#111211] font-semibold text-xs sm:text-sm tracking-wide transition-all duration-200 cursor-pointer shadow-sm group"
+                className="inline-flex min-h-[44px] items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#F3F0E8] hover:bg-[#C6A76A] text-[#111211] hover:text-[#111211] font-semibold text-xs sm:text-sm tracking-wide transition-all duration-200 cursor-pointer shadow-sm group"
               >
                 <span>Ücretsiz Demomu Hazırla</span>
                 <ArrowRight className="w-4 h-4 text-[#111211] group-hover:translate-x-1 transition-transform" />
@@ -105,7 +105,7 @@ export const Hero: React.FC<HeroProps> = ({ onDemoClick }) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 id="hero-secondary-whatsapp-cta"
-                className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-[#141514] hover:bg-[#1D1E1C] text-[#F3F0E8] hover:text-white font-medium text-xs sm:text-sm border border-[#F3F0E8]/[0.15] transition-all duration-200 shadow-sm group"
+                className="inline-flex min-h-[44px] items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-[#141514] hover:bg-[#1D1E1C] text-[#F3F0E8] hover:text-white font-medium text-xs sm:text-sm border border-[#F3F0E8]/[0.15] transition-all duration-200 shadow-sm group"
               >
                 <MessageCircle className="w-4 h-4 text-[#25D366] group-hover:scale-110 transition-transform" />
                 <span>WhatsApp'tan Görüşelim</span>
@@ -139,16 +139,16 @@ export const Hero: React.FC<HeroProps> = ({ onDemoClick }) => {
           </div>
 
           {/* Right Column: Interactive Browser/Device Mockup Representation */}
-          <div className="lg:col-span-5 relative">
+          <div className="lg:col-span-5 relative w-full min-w-0 max-w-full">
             
             {/* Top Mockup Controls (Industry switcher) */}
-            <div className="flex items-center justify-between mb-2.5 px-0.5">
-              <div className="flex items-center gap-1 bg-[#141514] p-1 rounded-xl border border-[#F3F0E8]/[0.09] text-xs">
+            <div className="flex items-center justify-between mb-2.5 px-0.5 gap-1.5 flex-nowrap w-full max-w-full overflow-hidden">
+              <div className="flex items-center gap-1 bg-[#141514] p-1 rounded-xl border border-[#F3F0E8]/[0.09] text-xs overflow-x-auto max-w-[calc(100%-80px)] shrink">
                 {previewSites.map((item, idx) => (
                   <button
                     key={item.tag}
                     onClick={() => setActiveIndustry(idx)}
-                    className={`px-2.5 py-1 rounded-lg transition-all font-medium text-[11px] cursor-pointer ${
+                    className={`px-2 sm:px-2.5 py-1 rounded-lg transition-all font-medium text-[10px] sm:text-[11px] whitespace-nowrap cursor-pointer shrink-0 ${
                       activeIndustry === idx
                         ? 'bg-[#F3F0E8] text-[#111211] font-semibold'
                         : 'text-[#AAA69D] hover:text-[#F3F0E8] hover:bg-[#181918]'
@@ -159,7 +159,7 @@ export const Hero: React.FC<HeroProps> = ({ onDemoClick }) => {
                 ))}
               </div>
 
-              <div className="flex items-center gap-1 bg-[#141514] p-1 rounded-xl border border-[#F3F0E8]/[0.09]">
+              <div className="flex items-center gap-1 bg-[#141514] p-1 rounded-xl border border-[#F3F0E8]/[0.09] shrink-0">
                 <button
                   onClick={() => setActiveTab('desktop')}
                   className={`p-1.5 rounded-lg transition-all cursor-pointer ${
@@ -182,7 +182,7 @@ export const Hero: React.FC<HeroProps> = ({ onDemoClick }) => {
             </div>
 
             {/* The Main Device Mockup Frame */}
-            <div className={`relative mx-auto transition-all duration-300 rounded-2xl bg-[#141514] border border-[#F3F0E8]/[0.09] shadow-2xl overflow-hidden ${
+            <div className={`relative mx-auto transition-all duration-300 rounded-2xl bg-[#141514] border border-[#F3F0E8]/[0.09] shadow-2xl overflow-hidden w-full max-w-full ${
               activeTab === 'mobile' ? 'max-w-[310px]' : 'w-full'
             }`}>
               

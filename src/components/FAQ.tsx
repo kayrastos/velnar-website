@@ -41,7 +41,7 @@ export const FAQ: React.FC = () => {
   };
 
   return (
-    <section id="sss" className="py-14 md:py-16 bg-[#090A0A] relative">
+    <section id="sss" className="py-14 md:py-16 bg-[#090A0A] relative overflow-hidden">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
@@ -73,7 +73,7 @@ export const FAQ: React.FC = () => {
               >
                 <button
                   onClick={() => toggleAccordion(index)}
-                  className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-3 cursor-pointer"
+                  className="w-full min-h-[44px] p-4 sm:p-5 text-left flex items-center justify-between gap-3 cursor-pointer"
                   aria-expanded={isOpen}
                 >
                   <span className="text-xs sm:text-sm font-bold text-[#F3F0E8] leading-snug">
@@ -97,7 +97,7 @@ export const FAQ: React.FC = () => {
         </div>
 
         {/* Still have questions? */}
-        <div className="mt-8 text-center p-4 rounded-2xl bg-[#141514] border border-[#F3F0E8]/[0.09] flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="mt-8 p-4 rounded-2xl bg-[#141514] border border-[#F3F0E8]/[0.09] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
           <div className="text-left space-y-0.5">
             <div className="text-xs font-bold text-[#F3F0E8]">Başka bir sorunuz mu var?</div>
             <div className="text-[11px] text-[#AAA69D]">WhatsApp üzerinden doğrudan ekibimize danışabilirsiniz.</div>
@@ -106,7 +106,7 @@ export const FAQ: React.FC = () => {
             href={getWhatsAppUrl("Merhaba, web sitenizdeki SSS bölümünü okudum, bir konuda danışmak istiyorum.")}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-4 py-2 rounded-xl bg-[#181918] hover:bg-[#1D1E1C] text-[#F3F0E8] hover:text-white border border-[#F3F0E8]/[0.15] text-xs font-medium flex items-center gap-1.5 transition-all shrink-0"
+            className="min-h-[44px] px-4 py-2 rounded-xl bg-[#181918] hover:bg-[#1D1E1C] text-[#F3F0E8] hover:text-white border border-[#F3F0E8]/[0.15] text-xs font-medium flex items-center justify-center gap-1.5 transition-all shrink-0"
           >
             <MessageCircle className="w-3.5 h-3.5 text-[#25D366]" />
             <span>WhatsApp</span>
