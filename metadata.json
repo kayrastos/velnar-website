@@ -1,0 +1,7 @@
+{
+  "name": "VELNAR Digital Studio",
+  "description": "Modern işletmeler için hızlı, mobil uyumlu ve müşteri kazandırmaya odaklı web siteleri ve dijital çözümler.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+

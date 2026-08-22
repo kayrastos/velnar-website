@@ -1,0 +1,169 @@
+import React from 'react';
+import { CONFIG, getWhatsAppUrl } from '../config';
+import { VelnarLogo } from './VelnarLogo';
+import { Mail, Instagram, MessageCircle, MapPin, ArrowUp } from 'lucide-react';
+
+interface FooterProps {
+  onOpenLegal: (type: 'kvkk' | 'gizlilik') => void;
+  onDemoClick: () => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({ onOpenLegal, onDemoClick }) => {
+  const currentYear = new Date().getFullYear();
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const navLinks = [
+    { label: 'Demolar', href: '#demolar' },
+    { label: 'Faydalar', href: '#faydalar' },
+    { label: 'Süreç', href: '#surec' },
+    { label: 'Paketler', href: '#paketler' },
+    { label: 'SSS', href: '#sss' },
+  ];
+
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    const target = document.querySelector(href);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  return (
+    <footer id="footer" className="bg-[#090A0A] border-t border-[#F3F0E8]/[0.06] pt-14 pb-10 text-[#AAA69D] text-xs">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-[#F3F0E8]/[0.06]">
+          
+          {/* Col 1: Brand & Description (5 cols) */}
+          <div className="lg:col-span-5 space-y-4 text-left">
+            <VelnarLogo />
+
+            <p className="text-[#F3F0E8]/80 text-xs font-mono tracking-wide">
+              Websites · Digital Products · AI Systems
+            </p>
+
+            <p className="text-[#AAA69D] text-xs sm:text-sm max-w-sm leading-relaxed">
+              Modern işletmeler için hızlı, mobil uyumlu ve müşteri kazandırmaya odaklı web siteleri ve dijital çözümler.
+            </p>
+
+            {CONFIG.LOCATION && (
+              <div className="flex items-center gap-2 text-xs text-[#74716A]">
+                <MapPin className="w-3.5 h-3.5 text-[#74716A]" />
+                <span>{CONFIG.LOCATION}</span>
+              </div>
+            )}
+          </div>
+
+          {/* Col 2: Navigation Links (3 cols) */}
+          <div className="lg:col-span-3 space-y-3 text-left">
+            <div className="text-xs font-semibold text-[#F3F0E8] uppercase tracking-wider">
+              Hızlı Bağlantılar
+            </div>
+            <ul className="space-y-2">
+              {navLinks.map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    onClick={(e) => handleLinkClick(e, link.href)}
+                    className="text-[#AAA69D] hover:text-[#F3F0E8] transition-colors"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+              <li>
+                <button
+                  onClick={onDemoClick}
+                  className="text-[#F3F0E8] hover:text-[#C6A76A] font-medium transition-colors cursor-pointer"
+                >
+                  Ücretsiz Demo İste →
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          {/* Col 3: Contact & Channels (4 cols) */}
+          <div className="lg:col-span-4 space-y-3 text-left">
+            <div className="text-xs font-semibold text-[#F3F0E8] uppercase tracking-wider">
+              İletişim & Kanallar
+            </div>
+            
+            <div className="space-y-2.5">
+              <a
+                href={`mailto:${CONFIG.EMAIL}`}
+                className="flex items-center gap-2.5 text-[#AAA69D] hover:text-[#F3F0E8] transition-colors group"
+              >
+                <div className="w-7 h-7 rounded-lg bg-[#141514] border border-[#F3F0E8]/[0.09] flex items-center justify-center text-[#AAA69D] group-hover:text-[#F3F0E8] group-hover:border-[#F3F0E8]/[0.2]">
+                  <Mail className="w-3.5 h-3.5" />
+                </div>
+                <span>{CONFIG.EMAIL}</span>
+              </a>
+
+              <a
+                href={getWhatsAppUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2.5 text-[#AAA69D] hover:text-[#F3F0E8] transition-colors group"
+              >
+                <div className="w-7 h-7 rounded-lg bg-[#141514] border border-[#F3F0E8]/[0.09] flex items-center justify-center text-[#25D366] group-hover:border-[#25D366]/40">
+                  <MessageCircle className="w-3.5 h-3.5 text-[#25D366]" />
+                </div>
+                <span>WhatsApp ({CONFIG.WHATSAPP_DISPLAY})</span>
+              </a>
+
+              {CONFIG.INSTAGRAM_URL && (
+                <a
+                  href={CONFIG.INSTAGRAM_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2.5 text-[#AAA69D] hover:text-[#F3F0E8] transition-colors group"
+                >
+                  <div className="w-7 h-7 rounded-lg bg-[#141514] border border-[#F3F0E8]/[0.09] flex items-center justify-center text-[#AAA69D] group-hover:text-[#F3F0E8] group-hover:border-[#F3F0E8]/[0.2]">
+                    <Instagram className="w-3.5 h-3.5" />
+                  </div>
+                  <span>Instagram</span>
+                </a>
+              )}
+            </div>
+          </div>
+
+        </div>
+
+        {/* Bottom Legal & Copyright */}
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[#74716A]">
+          <div>
+            © {currentYear} {CONFIG.BRAND_NAME}. Tüm hakları saklıdır.
+          </div>
+
+          <div className="flex items-center gap-6">
+            <button
+              onClick={() => onOpenLegal('gizlilik')}
+              className="hover:text-[#F3F0E8] transition-colors cursor-pointer"
+            >
+              Gizlilik
+            </button>
+            <button
+              onClick={() => onOpenLegal('kvkk')}
+              className="hover:text-[#F3F0E8] transition-colors cursor-pointer"
+            >
+              KVKK
+            </button>
+            <button
+              onClick={scrollToTop}
+              className="p-1.5 rounded-lg bg-[#141514] hover:bg-[#181918] border border-[#F3F0E8]/[0.09] text-[#AAA69D] hover:text-[#F3F0E8] transition-colors cursor-pointer"
+              title="Yukarı Çık"
+              aria-label="Yukarı Çık"
+            >
+              <ArrowUp className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </footer>
+  );
+};
+
