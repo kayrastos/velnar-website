@@ -1,14 +1,27 @@
 import React from 'react';
-import { useLanguage } from '../context/LanguageContext';
-import { Check, Sparkles, ArrowRight, ShieldCheck, Tag, Info, Lock } from 'lucide-react';
+import { useLanguage, Market } from '../context/LanguageContext';
+import { Check, Sparkles, ArrowRight, ShieldCheck, Tag, Info, Lock, Globe, MapPin } from 'lucide-react';
 
 interface PricingProps {
   onSelectPackage: (packageName: string) => void;
   onStartPayment?: (packageId: 'starter' | 'business' | 'ai-business') => void;
 }
 
+const DISPLAY_PRICES: Record<Market, Record<'starter' | 'business' | 'ai-business', { standard: string; launch: string; initial: string }>> = {
+  turkey: {
+    starter: { standard: '7.900 TL', launch: '6.320 TL', initial: '3.160 TL' },
+    business: { standard: '12.900 TL', launch: '10.320 TL', initial: '5.160 TL' },
+    'ai-business': { standard: '19.900 TL', launch: '15.920 TL', initial: '7.960 TL' },
+  },
+  international: {
+    starter: { standard: '$500', launch: '$400', initial: '$200' },
+    business: { standard: '$800', launch: '$640', initial: '$320' },
+    'ai-business': { standard: '$1,250', launch: '$1,000', initial: '$500' },
+  },
+};
+
 export const Pricing: React.FC<PricingProps> = ({ onSelectPackage, onStartPayment }) => {
-  const { t, lang, isLaunchCampaign } = useLanguage();
+  const { t, lang, market, setMarket, isLaunchCampaign } = useLanguage();
   const pricingData = t.pricing;
 
   return (
@@ -43,12 +56,47 @@ export const Pricing: React.FC<PricingProps> = ({ onSelectPackage, onStartPaymen
               <span className="text-[#AAA69D] font-sans text-[11px] hidden sm:inline">· {pricingData.launchSubtext}</span>
             </div>
           )}
+
+          {/* Refined Independent Market Selector */}
+          <div className="pt-3 flex items-center justify-center">
+            <div className="inline-flex items-center p-1 rounded-xl bg-[#141514] border border-[#F3F0E8]/[0.1] shadow-inner">
+              <button
+                type="button"
+                id="market-btn-turkey"
+                onClick={() => setMarket('turkey')}
+                className={`px-4 py-1.5 rounded-lg text-xs font-semibold tracking-wide transition-all cursor-pointer flex items-center gap-1.5 ${
+                  market === 'turkey'
+                    ? 'bg-[#F3F0E8] text-[#111211] shadow-sm'
+                    : 'text-[#AAA69D] hover:text-[#F3F0E8]'
+                }`}
+              >
+                <span>{lang === 'en' ? 'Türkiye (TRY)' : 'Türkiye (TL)'}</span>
+              </button>
+              <button
+                type="button"
+                id="market-btn-international"
+                onClick={() => setMarket('international')}
+                className={`px-4 py-1.5 rounded-lg text-xs font-semibold tracking-wide transition-all cursor-pointer flex items-center gap-1.5 ${
+                  market === 'international'
+                    ? 'bg-[#F3F0E8] text-[#111211] shadow-sm'
+                    : 'text-[#AAA69D] hover:text-[#F3F0E8]'
+                }`}
+              >
+                <Globe className="w-3.5 h-3.5" />
+                <span>{lang === 'en' ? 'International (USD)' : 'Yurt Dışı / Global ($)'}</span>
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* 3 Pricing Cards Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch w-full max-w-full">
           {pricingData.plans.map((plan) => {
             const isPopular = plan.popular;
+            const priceConfig = DISPLAY_PRICES[market][plan.id as 'starter' | 'business' | 'ai-business'] || DISPLAY_PRICES[market].business;
+            const standardPrice = priceConfig.standard;
+            const launchPrice = priceConfig.launch;
+            const period = lang === 'en' ? 'starting from' : 'başlayan fiyatlarla';
 
             return (
               <div
@@ -87,14 +135,14 @@ export const Pricing: React.FC<PricingProps> = ({ onSelectPackage, onStartPaymen
                       <div>
                         <div className="flex items-baseline gap-2.5 flex-wrap">
                           <span className="text-3xl sm:text-4xl font-black text-[#F3F0E8] tracking-tight">
-                            {plan.launchPrice}
+                            {launchPrice}
                           </span>
                           <span className="text-sm sm:text-base font-semibold text-[#74716A] line-through decoration-[#C6A76A]/60 font-mono">
-                            {plan.standardPrice}
+                            {standardPrice}
                           </span>
                         </div>
                         <div className="flex items-center gap-1.5 text-xs text-[#AAA69D] mt-1 font-medium">
-                          <span>{plan.period}</span>
+                          <span>{period}</span>
                           <span className="text-[10px] text-[#C6A76A] font-mono px-1.5 py-0.5 rounded bg-[#C6A76A]/10 border border-[#C6A76A]/20">
                             -20%
                           </span>
@@ -103,10 +151,10 @@ export const Pricing: React.FC<PricingProps> = ({ onSelectPackage, onStartPaymen
                     ) : (
                       <div>
                         <div className="text-3xl sm:text-4xl font-black text-[#F3F0E8] tracking-tight">
-                          {plan.standardPrice}
+                          {standardPrice}
                         </div>
                         <div className="text-xs text-[#AAA69D] mt-0.5 font-medium">
-                          {plan.period}
+                          {period}
                         </div>
                       </div>
                     )}

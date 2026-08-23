@@ -51,9 +51,8 @@ const PACKAGE_NAMES = {
 };
 
 export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, packageId, onClose }) => {
-  const { lang } = useLanguage();
+  const { lang, market } = useLanguage();
   const isEn = lang === 'en';
-  const market = isEn ? 'international' : 'turkey';
 
   const [formData, setFormData] = useState({
     name: '',
@@ -61,9 +60,9 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, packageId, o
     email: '',
     phone: '',
     address: '',
-    city: isEn ? 'London' : 'İstanbul',
-    country: isEn ? 'United Kingdom' : 'Türkiye',
-    zipCode: isEn ? 'EC1A 1BB' : '34000',
+    city: market === 'international' ? (isEn ? 'London' : 'Londra') : 'İstanbul',
+    country: market === 'international' ? (isEn ? 'United Kingdom' : 'İngiltere') : 'Türkiye',
+    zipCode: market === 'international' ? 'EC1A 1BB' : '34000',
     identityNumber: '',
   });
 

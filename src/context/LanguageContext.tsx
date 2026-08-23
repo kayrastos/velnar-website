@@ -3,10 +3,14 @@ import { Language, LocaleDictionary } from '../locales/types';
 import { LOCALES } from '../locales';
 import { CONFIG } from '../config';
 
+export type Market = 'turkey' | 'international';
+
 interface LanguageContextValue {
   lang: Language;
   setLang: (lang: Language) => void;
   toggleLang: () => void;
+  market: Market;
+  setMarket: (market: Market) => void;
   t: LocaleDictionary;
   isLaunchCampaign: boolean;
   discountPercent: number;
@@ -50,6 +54,22 @@ function detectInitialLanguage(): Language {
 
   // Default to 'en' for non-Turkish environments
   return 'en';
+}
+
+function detectInitialMarket(initialLang: Language): Market {
+  if (typeof window !== 'undefined') {
+    try {
+      const storedMarket = localStorage.getItem('velnar_market');
+      if (storedMarket === 'turkey' || storedMarket === 'international') {
+        return storedMarket;
+      }
+    } catch {
+      // Ignore storage access errors
+    }
+  }
+
+  // First visit default based on detected initial language
+  return initialLang === 'tr' ? 'turkey' : 'international';
 }
 
 function updateHeadMeta(dictionary: LocaleDictionary, currentLang: Language) {
@@ -110,6 +130,16 @@ function updateHeadMeta(dictionary: LocaleDictionary, currentLang: Language) {
 
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [lang, setLangState] = useState<Language>(() => detectInitialLanguage());
+  const [market, setMarketState] = useState<Market>(() => detectInitialMarket(detectInitialLanguage()));
+
+  const setMarket = useCallback((newMarket: Market) => {
+    setMarketState(newMarket);
+    try {
+      localStorage.setItem('velnar_market', newMarket);
+    } catch {
+      // Ignore localStorage error
+    }
+  }, []);
 
   const setLang = useCallback((newLang: Language) => {
     setLangState(newLang);
@@ -173,6 +203,8 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
     lang,
     setLang,
     toggleLang,
+    market,
+    setMarket,
     t: dictionary,
     isLaunchCampaign: CONFIG.LAUNCH_CAMPAIGN_ENABLED,
     discountPercent: CONFIG.LAUNCH_DISCOUNT_PERCENT

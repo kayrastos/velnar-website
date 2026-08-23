@@ -36,33 +36,21 @@ export const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onGoHome
 
         {/* Headings */}
         <h1 className="text-2xl sm:text-3xl font-extrabold text-[#F3F0E8] tracking-tight mb-3">
-          {isEn ? 'Payment received successfully.' : 'Ödeme başarıyla alındı.'}
+          {isEn ? 'Payment successfully verified.' : 'Ödeme başarıyla doğrulandı.'}
         </h1>
 
         <p className="text-xs sm:text-sm text-[#AAA69D] leading-relaxed max-w-md mx-auto mb-6">
           {isEn
-            ? 'Your initial project payment is complete. The VELNAR team will contact you to finalize the project details.'
-            : 'Projenizin başlangıç ödemesi tamamlandı. VELNAR ekibi proje detaylarını netleştirmek için sizinle iletişime geçecek.'}
+            ? 'Your initial project payment is confirmed. The VELNAR team will contact you shortly to initiate the kickoff.'
+            : 'Başlangıç ödemeniz doğrulandı. VELNAR ekibi proje başlangıcı için sizinle kısa süre içinde iletişime geçecektir.'}
         </p>
 
         {/* Summary Card */}
         <div className="p-4 rounded-xl bg-[#181918] border border-[#F3F0E8]/[0.08] text-left space-y-2.5 mb-6 text-xs">
-          <div className="flex items-center justify-between pb-2 border-b border-[#F3F0E8]/[0.06]">
-            <span className="text-[#AAA69D]">{isEn ? 'Selected Package' : 'Seçilen Paket'}</span>
-            <span className="font-bold text-[#F3F0E8] font-mono">{packageName}</span>
-          </div>
-
-          {formattedAmount && (
-            <div className="flex items-center justify-between pb-2 border-b border-[#F3F0E8]/[0.06]">
-              <span className="text-[#AAA69D]">{isEn ? 'Paid Initial Amount (50%)' : 'Ödenen Başlangıç Bedeli (%50)'}</span>
-              <span className="font-bold text-[#C6A76A] font-mono">{formattedAmount}</span>
-            </div>
-          )}
-
           {reference && (
             <div className="flex items-center justify-between pb-2 border-b border-[#F3F0E8]/[0.06]">
-              <span className="text-[#AAA69D]">{isEn ? 'Transaction Reference' : 'İşlem Referansı'}</span>
-              <span className="text-[#AAA69D] font-mono text-[11px]">{reference}</span>
+              <span className="text-[#AAA69D]">{isEn ? 'Reference ID' : 'Referans Kodu'}</span>
+              <span className="text-[#F3F0E8] font-mono text-[11px] font-semibold">{reference}</span>
             </div>
           )}
 

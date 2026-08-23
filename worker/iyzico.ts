@@ -123,8 +123,12 @@ export async function generateIyzwsV2Auth(
   uriPath: string,
   requestBodyJson: string
 ): Promise<{ authorization: string; randomKey: string }> {
-  // Generate random key for this specific request
-  const randomKey = `${Date.now()}${Math.random().toString(36).substring(2, 10)}`;
+  // Generate cryptographically secure random key for this specific request
+  const randomBytes = new Uint8Array(8);
+  crypto.getRandomValues(randomBytes);
+  const randomHex = Array.from(randomBytes).map((b) => b.toString(16).padStart(2, '0')).join('');
+  const randomKey = `${Date.now()}_${randomHex}`;
+
   const dataToSign = `${randomKey}${uriPath}${requestBodyJson}`;
   const signatureHex = await computeHmacSha256Hex(secretKey, dataToSign);
   const authPayload = `apiKey:${apiKey}&randomKey:${randomKey}&signature:${signatureHex}`;
@@ -132,7 +136,7 @@ export async function generateIyzwsV2Auth(
   // Base64 encode the auth payload
   let base64Auth: string;
   if (typeof btoa === 'function') {
-    base64Auth = btoa(authPayload);
+    base64Auth = btoa(unescape(encodeURIComponent(authPayload)));
   } else {
     base64Auth = Buffer.from(authPayload, 'utf-8').toString('base64');
   }

@@ -63,16 +63,17 @@ function apiDevPlugin(): Plugin {
                 return;
               }
 
-              const convId = 'sandbox-' + Math.random().toString(36).substring(2, 10);
+              const randomHex = Math.floor(Math.random() * 1e12).toString(36);
+              const convId = 'sandbox-' + randomHex;
               const lang = language === 'en' ? 'en' : 'tr';
               
-              // In dev mode without live iyzico keys, provide the sandbox demo payment page redirect or mock checkout
+              // In dev mode without live iyzico keys, provide the sandbox demo payment redirect
               res.setHeader('Content-Type', 'application/json');
               res.statusCode = 200;
               res.end(
                 JSON.stringify({
                   ok: true,
-                  paymentPageUrl: `/${lang}/payment/success?pkg=${pkg.name}&amount=${pkg.initialPayment}&curr=${pkg.currency}&ref=${convId}`,
+                  paymentPageUrl: `/${lang}/payment/success?ref=${convId}`,
                   conversationId: convId,
                   isSandbox: true,
                 })
