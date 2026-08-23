@@ -1,13 +1,14 @@
 import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { Check, Sparkles, ArrowRight, ShieldCheck, Tag, Info } from 'lucide-react';
+import { Check, Sparkles, ArrowRight, ShieldCheck, Tag, Info, Lock } from 'lucide-react';
 
 interface PricingProps {
   onSelectPackage: (packageName: string) => void;
+  onStartPayment?: (packageId: 'starter' | 'business' | 'ai-business') => void;
 }
 
-export const Pricing: React.FC<PricingProps> = ({ onSelectPackage }) => {
-  const { t, isLaunchCampaign } = useLanguage();
+export const Pricing: React.FC<PricingProps> = ({ onSelectPackage, onStartPayment }) => {
+  const { t, lang, isLaunchCampaign } = useLanguage();
   const pricingData = t.pricing;
 
   return (
@@ -140,7 +141,7 @@ export const Pricing: React.FC<PricingProps> = ({ onSelectPackage }) => {
                 </div>
 
                 {/* Card CTA */}
-                <div className="pt-6 mt-6 border-t border-[#F3F0E8]/[0.06]">
+                <div className="pt-6 mt-6 border-t border-[#F3F0E8]/[0.06] space-y-2">
                   <button
                     onClick={() => onSelectPackage(plan.name)}
                     id={`btn-${plan.id}-select`}
@@ -153,6 +154,17 @@ export const Pricing: React.FC<PricingProps> = ({ onSelectPackage }) => {
                     <span>{plan.ctaText}</span>
                     <ArrowRight className={`w-3.5 h-3.5 ${isPopular ? 'text-[#111211]' : 'text-[#AAA69D]'}`} />
                   </button>
+
+                  {onStartPayment && (
+                    <button
+                      onClick={() => onStartPayment(plan.id as any)}
+                      id={`btn-${plan.id}-pay`}
+                      className="w-full min-h-[38px] py-2 px-3 rounded-xl text-[11px] font-medium text-[#AAA69D] hover:text-[#F3F0E8] bg-[#141514] hover:bg-[#181918] border border-[#F3F0E8]/[0.08] hover:border-[#C6A76A]/40 flex items-center justify-center gap-1.5 transition-all cursor-pointer"
+                    >
+                      <Lock className="w-3 h-3 text-[#C6A76A]" />
+                      <span>{lang === 'en' ? 'Start with 50% Initial Payment' : 'Projeyi Başlat (%50 Ödeme)'}</span>
+                    </button>
+                  )}
                 </div>
               </div>
             );

@@ -121,8 +121,14 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
 
     if (typeof window !== 'undefined') {
       const currentHash = window.location.hash;
-      const targetPath = `/${newLang}${currentHash}`;
-      if (window.location.pathname !== `/${newLang}`) {
+      const currentPath = window.location.pathname;
+      let targetPath = `/${newLang}${currentHash}`;
+      if (currentPath.includes('/payment/success')) {
+        targetPath = `/${newLang}/payment/success${window.location.search}${currentHash}`;
+      } else if (currentPath.includes('/payment/failed')) {
+        targetPath = `/${newLang}/payment/failed${window.location.search}${currentHash}`;
+      }
+      if (window.location.pathname !== targetPath) {
         window.history.pushState({ lang: newLang }, '', targetPath);
       }
     }
