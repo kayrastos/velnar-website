@@ -61,16 +61,19 @@ export default {
     const url = new URL(request.url);
     const pathname = url.pathname;
 
-    // Handle CORS preflight for /api/*
+    // Handle CORS preflight for /api/* (same-origin only for payment)
     if (request.method === 'OPTIONS' && pathname.startsWith('/api/')) {
-      const origin = request.headers.get('origin') || '';
       const isAllowed = isAllowedOrigin(request);
+      if (!isAllowed) {
+        return new Response(null, { status: 403 });
+      }
+      const origin = request.headers.get('origin') || url.origin;
       return new Response(null, {
         status: 204,
         headers: {
-          'Access-Control-Allow-Origin': isAllowed && origin ? origin : url.origin,
+          'Access-Control-Allow-Origin': origin,
           'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+          'Access-Control-Allow-Headers': 'Content-Type',
           'Access-Control-Max-Age': '86400',
         },
       });
@@ -86,8 +89,7 @@ export default {
             ok: true,
             service: 'velnar-api',
           },
-          200,
-          { 'Access-Control-Allow-Origin': '*' }
+          200
         );
       }
       return jsonResponse({ error: 'Method Not Allowed' }, 405);
@@ -98,6 +100,11 @@ export default {
     // -------------------------------------------------------------
     if (pathname === '/api/payment/config') {
       if (request.method === 'GET' || request.method === 'HEAD') {
+        // Verify origin
+        if (!isAllowedOrigin(request)) {
+          return jsonResponse({ ok: false, error: 'Cross-origin requests forbidden' }, 403);
+        }
+
         const baseUrl = env.IYZICO_BASE_URL || 'https://sandbox-api.iyzipay.com';
         const isSandbox = baseUrl.toLowerCase().includes('sandbox');
         return jsonResponse(
@@ -107,8 +114,7 @@ export default {
             sandboxBadge: isSandbox ? 'SANDBOX / TEST PAYMENT' : null,
             prices: SERVER_PRICES,
           },
-          200,
-          { 'Access-Control-Allow-Origin': '*' }
+          200
         );
       }
       return jsonResponse({ error: 'Method Not Allowed' }, 405);

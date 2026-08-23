@@ -11,16 +11,10 @@ export const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onGoHome
   const { lang } = useLanguage();
   const isEn = lang === 'en';
 
-  // Read URL query parameters safely
+  // Read safe reference ID from verified server redirect
   const urlParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : new URLSearchParams();
-  const packageName = urlParams.get('pkg') || (isEn ? 'Business Package' : 'Business Paketi');
-  const amount = urlParams.get('amount');
-  const currency = urlParams.get('curr') || (isEn ? 'USD' : 'TRY');
-  const reference = urlParams.get('ref');
-
-  const formattedAmount = amount
-    ? `${Number(amount).toLocaleString(isEn ? 'en-US' : 'tr-TR', { minimumFractionDigits: 0, maximumFractionDigits: 2 })} ${currency === 'TRY' ? 'TL' : '$'}`
-    : null;
+  const rawRef = urlParams.get('ref') || '';
+  const reference = rawRef.slice(0, 100).replace(/[^a-zA-Z0-9_-]/g, '');
 
   return (
     <div className="min-h-[80vh] flex items-center justify-center py-16 px-4 sm:px-6">
