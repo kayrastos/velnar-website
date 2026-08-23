@@ -473,7 +473,7 @@ export const en: LocaleDictionary = {
     headingHighlight: "stronger digital presence.",
     subtitle: "Receive an interactive homepage concept tailored to your brand within 24-48 hours with zero upfront commitment.",
     primaryCta: "Get My Free Concept",
-    secondaryCta: "Message on WhatsApp",
+    secondaryCta: "Email Directly",
     guaranteeText: "100% Free Concept Preview · 50% to Start / 50% Before Delivery · Satisfaction Promise"
   },
   footer: {
@@ -494,10 +494,10 @@ export const en: LocaleDictionary = {
       interactiveDesc: "Test this production deployment in a new tab, or request a bespoke concept customized for your own business within 24-48 hours.",
       keyFeaturesTitle: "Key Capabilities in This Concept:",
       mobileSpeedBadge: "100% Mobile Optimized",
-      whatsappBadge: "WhatsApp Inquiry Flow",
+      whatsappBadge: "Fast Communication",
       sslBadge: "SSL & Secure Architecture",
       openLiveBtn: "Open Live Demo",
-      askWhatsAppBtn: "Ask via WhatsApp",
+      askWhatsAppBtn: "Ask via Email",
       requestCustomBtn: "Request Similar Concept",
       whatsAppAskMessage: (title: string) => `Hello, I reviewed your ${title} concept. Could you create a similar bespoke concept for my business?`
     },
@@ -516,8 +516,8 @@ export const en: LocaleDictionary = {
     }
   },
   floatingWhatsApp: {
-    tooltip: "Message us for a free concept or any quick questions",
-    ariaLabel: "Send direct WhatsApp message",
+    tooltip: "Contact us for a free concept or questions at hello@velnar.studio",
+    ariaLabel: "Send direct email to VELNAR Studio",
     defaultMessage: "Hello, I would like to request information and a free homepage concept for my business."
   }
 };

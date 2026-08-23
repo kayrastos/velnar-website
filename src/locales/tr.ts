@@ -472,7 +472,7 @@ export const tr: LocaleDictionary = {
     headingHighlight: "ilk adımı atın.",
     subtitle: "Hiçbir peşin ödeme veya taahhütte bulunmadan markanıza özel tasarlanmış demoyu 24-48 saat içinde hazırlayalım.",
     primaryCta: "Ücretsiz Demo İste",
-    secondaryCta: "WhatsApp ile Hemen Yazın",
+    secondaryCta: "E-posta ile Hemen Yazın",
     guaranteeText: "%100 Ücretsiz Demo Önizleme · %50 Başlangıç / %50 Teslim · Memnuniyet Güvencesi"
   },
   footer: {
@@ -493,10 +493,10 @@ export const tr: LocaleDictionary = {
       interactiveDesc: "Bu canlı çalışmayı yeni sekmede doğrudan test edebilir veya kendi işletmeniz için birebir uyarlanmış ücretsiz ana sayfa demosunu 24-48 saat içinde talep edebilirsiniz.",
       keyFeaturesTitle: "Bu Konseptteki Öne Çıkan Özellikler:",
       mobileSpeedBadge: "%100 Mobil Hız Odaklı",
-      whatsappBadge: "WhatsApp Dönüşüm Akışı",
+      whatsappBadge: "Hızlı İletişim & Yanıt",
       sslBadge: "SSL & Güvenli Altyapı",
       openLiveBtn: "Canlı Sayfayı Aç",
-      askWhatsAppBtn: "WhatsApp ile Sor",
+      askWhatsAppBtn: "E-posta ile Sor",
       requestCustomBtn: "İşletmeme Özel Demo İste",
       whatsAppAskMessage: (title: string) => `Merhaba, ${title} konseptinizi inceledim. Benim işletmem için de benzer bir ücretsiz demo hazırlayabilir misiniz?`
     },
@@ -515,8 +515,8 @@ export const tr: LocaleDictionary = {
     }
   },
   floatingWhatsApp: {
-    tooltip: "Ücretsiz demo veya aklınıza takılan sorular için bize yazın",
-    ariaLabel: "WhatsApp ile doğrudan mesaj gönderin",
+    tooltip: "Ücretsiz demo veya sorularınız için hello@velnar.studio adresine yazın",
+    ariaLabel: "E-posta ile doğrudan mesaj gönderin",
     defaultMessage: "Merhaba, işletmem için web sitesi ve ücretsiz demo hakkında bilgi almak istiyorum."
   }
 };

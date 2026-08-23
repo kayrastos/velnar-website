@@ -1,8 +1,8 @@
 import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { DemoItem } from '../types';
-import { getWhatsAppUrl } from '../config';
-import { X, CheckCircle2, MessageCircle, ExternalLink, ArrowRight, Smartphone, ShieldCheck } from 'lucide-react';
+import { getMailtoUrl } from '../config';
+import { X, CheckCircle2, Mail, ExternalLink, ArrowRight, Smartphone, ShieldCheck } from 'lucide-react';
 
 interface DemoModalProps {
   demo: DemoItem | null;
@@ -16,9 +16,13 @@ export const DemoModal: React.FC<DemoModalProps> = ({ demo, onClose, onRequestSi
 
   const isEn = lang === 'en';
 
-  const waMessage = isEn
-    ? `Hello, I checked out your "${demo.title}" concept. Could you create a tailored demo for my business?`
-    : `Merhaba, ${demo.title} konseptinizi inceledim. Benim işletmem için de benzer bir ücretsiz demo hazırlayabilir misiniz?`;
+  const mailSubject = isEn
+    ? `Concept Inquiry: ${demo.title} — VELNAR Studio`
+    : `Konsept Talebi: ${demo.title} — VELNAR Studio`;
+
+  const mailBody = isEn
+    ? `Hello,\n\nI reviewed your "${demo.title}" portfolio concept on velnar.studio. Could you create a similar tailored homepage concept for my business?\n\nIndustry / Business: ${demo.industry}\n`
+    : `Merhaba,\n\nvelnar.studio üzerindeki "${demo.title}" portfolyo konseptinizi inceledim. Benim işletmem için de benzer bir konsept hazırlayabilir misiniz?\n\nSektör / İşletme: ${demo.industry}\n`;
 
   return (
     <div
@@ -100,8 +104,8 @@ export const DemoModal: React.FC<DemoModalProps> = ({ demo, onClose, onRequestSi
               <span>{isEn ? 'Mobile Speed Optimized' : '%100 Mobil Hız Odaklı'}</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <MessageCircle className="w-4 h-4 text-[#25D366]" />
-              <span>{isEn ? 'Lead & WhatsApp Inquiries' : 'WhatsApp Dönüşüm Akışı'}</span>
+              <Mail className="w-4 h-4 text-[#C6A76A]" />
+              <span>{isEn ? 'Direct Contact & Inquiries' : 'Hızlı İletişim & Talep Akışı'}</span>
             </div>
             <div className="flex items-center gap-1.5">
               <ShieldCheck className="w-4 h-4 text-[#C6A76A]" />
@@ -126,13 +130,11 @@ export const DemoModal: React.FC<DemoModalProps> = ({ demo, onClose, onRequestSi
           )}
 
           <a
-            href={getWhatsAppUrl(waMessage, lang)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="min-h-[44px] px-4 py-2.5 rounded-xl bg-[#181918] hover:bg-[#1D1E1C] text-[#F3F0E8] hover:text-white border border-[#F3F0E8]/[0.15] text-xs font-medium flex items-center justify-center gap-2 transition-all"
+            href={getMailtoUrl(mailSubject, mailBody)}
+            className="min-h-[44px] px-4 py-2.5 rounded-xl bg-[#181918] hover:bg-[#1D1E1C] text-[#F3F0E8] hover:text-white border border-[#F3F0E8]/[0.15] hover:border-[#C6A76A]/40 text-xs font-medium flex items-center justify-center gap-2 transition-all cursor-pointer"
           >
-            <MessageCircle className="w-4 h-4 text-[#25D366]" />
-            <span>{isEn ? 'Ask on WhatsApp' : 'WhatsApp ile Sor'}</span>
+            <Mail className="w-4 h-4 text-[#C6A76A]" />
+            <span>{isEn ? 'Ask via Email' : 'E-posta ile Sor'}</span>
           </a>
 
           <button

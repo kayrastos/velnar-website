@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { getWhatsAppUrl } from '../config';
-import { ArrowRight, MessageCircle, ShieldCheck } from 'lucide-react';
+import { getMailtoUrl } from '../config';
+import { ArrowRight, Mail, ShieldCheck } from 'lucide-react';
 
 interface FinalCTAProps {
   onDemoClick: () => void;
@@ -11,9 +11,9 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({ onDemoClick }) => {
   const { t, lang } = useLanguage();
   const ctaData = t.finalCta;
 
-  const whatsappMessage = lang === 'en'
-    ? "Hello, I would like to discuss a tailored web concept for my business."
-    : "Merhaba, işletmem için web sitesi projesi hakkında WhatsApp üzerinden görüşmek istiyorum.";
+  const mailSubject = lang === 'en'
+    ? "Project Inquiry — VELNAR Studio"
+    : "Proje Talebi — VELNAR Studio";
 
   return (
     <section id="final-cta" className="py-16 md:py-20 bg-[#0E0F0F] border-y border-[#F3F0E8]/[0.06] relative overflow-hidden">
@@ -54,13 +54,11 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({ onDemoClick }) => {
           </button>
 
           <a
-            href={getWhatsAppUrl(whatsappMessage, lang)}
-            target="_blank"
-            rel="noopener noreferrer"
-            id="final-cta-whatsapp-btn"
-            className="w-full sm:w-auto min-h-[44px] inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#141514] hover:bg-[#1D1E1C] text-[#F3F0E8] hover:text-white font-medium text-xs sm:text-sm border border-[#F3F0E8]/[0.15] transition-all duration-200 shadow-sm"
+            href={getMailtoUrl(mailSubject)}
+            id="final-cta-email-btn"
+            className="w-full sm:w-auto min-h-[44px] inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#141514] hover:bg-[#1D1E1C] text-[#F3F0E8] hover:text-white font-medium text-xs sm:text-sm border border-[#F3F0E8]/[0.15] hover:border-[#C6A76A]/40 transition-all duration-200 shadow-sm cursor-pointer"
           >
-            <MessageCircle className="w-4 h-4 text-[#25D366]" />
+            <Mail className="w-4 h-4 text-[#C6A76A]" />
             <span>{ctaData.secondaryCta}</span>
           </a>
         </div>

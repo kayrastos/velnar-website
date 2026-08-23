@@ -97,23 +97,24 @@ export const Footer: React.FC<FooterProps> = ({ onOpenLegal, onDemoClick }) => {
                 href={`mailto:${CONFIG.EMAIL}`}
                 className="flex items-center gap-2.5 text-[#AAA69D] hover:text-[#F3F0E8] transition-colors group"
               >
-                <div className="w-7 h-7 rounded-lg bg-[#141514] border border-[#F3F0E8]/[0.09] flex items-center justify-center text-[#AAA69D] group-hover:text-[#F3F0E8] group-hover:border-[#F3F0E8]/[0.2]">
-                  <Mail className="w-3.5 h-3.5" />
+                <div className="w-7 h-7 rounded-lg bg-[#141514] border border-[#F3F0E8]/[0.09] flex items-center justify-center text-[#C6A76A] group-hover:border-[#C6A76A]/40">
+                  <Mail className="w-3.5 h-3.5 text-[#C6A76A]" />
                 </div>
-                <span>{CONFIG.EMAIL}</span>
+                <span className="font-medium text-[#F3F0E8] group-hover:text-[#C6A76A] transition-colors">{CONFIG.EMAIL}</span>
               </a>
 
-              <a
-                href={getWhatsAppUrl(undefined, lang)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2.5 text-[#AAA69D] hover:text-[#F3F0E8] transition-colors group"
-              >
-                <div className="w-7 h-7 rounded-lg bg-[#141514] border border-[#F3F0E8]/[0.09] flex items-center justify-center text-[#25D366] group-hover:border-[#25D366]/40">
-                  <MessageCircle className="w-3.5 h-3.5 text-[#25D366]" />
+              {/* WhatsApp: Subtle Coming Soon state until real business number is active */}
+              <div className="flex items-center gap-2.5 text-[#74716A] select-none">
+                <div className="w-7 h-7 rounded-lg bg-[#141514] border border-[#F3F0E8]/[0.06] flex items-center justify-center text-[#74716A]">
+                  <MessageCircle className="w-3.5 h-3.5" />
                 </div>
-                <span>WhatsApp ({CONFIG.WHATSAPP_DISPLAY})</span>
-              </a>
+                <div className="flex items-center gap-2 text-xs">
+                  <span>WhatsApp</span>
+                  <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-[#181918] border border-[#F3F0E8]/[0.08] text-[#AAA69D]">
+                    {lang === 'en' ? 'Coming soon' : 'Yakında'}
+                  </span>
+                </div>
+              </div>
 
               {CONFIG.INSTAGRAM_URL && (
                 <a

@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { CONFIG } from '../config';
+import { CONFIG, getMailtoUrl } from '../config';
 import { DemoFormData } from '../types';
 import { 
   Send, 
-  MessageCircle, 
+  Mail, 
   CheckCircle2, 
   Phone, 
   Building2, 
@@ -12,10 +12,10 @@ import {
   Layers, 
   Globe, 
   Instagram, 
-  FileText,
-  AlertCircle,
-  Copy,
-  Check
+  FileText, 
+  AlertCircle, 
+  Copy, 
+  Check 
 } from 'lucide-react';
 
 interface DemoRequestFormProps {
@@ -48,7 +48,7 @@ export const DemoRequestForm: React.FC<DemoRequestFormProps> = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionSuccess, setSubmissionSuccess] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [generatedWhatsAppUrl, setGeneratedWhatsAppUrl] = useState('');
+  const [generatedMailtoUrl, setGeneratedMailtoUrl] = useState('');
 
   // Update package when changed externally or when language switches
   useEffect(() => {
@@ -99,7 +99,7 @@ export const DemoRequestForm: React.FC<DemoRequestFormProps> = ({
     return Object.keys(newErrors).length === 0;
   };
 
-  const constructWhatsAppMessage = (): string => {
+  const constructMessage = (): string => {
     return formDataLocale.whatsappMessageTemplate({
       fullName: formData.fullName.trim(),
       businessName: formData.businessName.trim(),
@@ -120,20 +120,22 @@ export const DemoRequestForm: React.FC<DemoRequestFormProps> = ({
     }
 
     setIsSubmitting(true);
-    const rawMessage = constructWhatsAppMessage();
-    const encodedMessage = encodeURIComponent(rawMessage);
-    const waUrl = `https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${encodedMessage}`;
-    setGeneratedWhatsAppUrl(waUrl);
+    const rawMessage = constructMessage();
+    const mailSubject = lang === 'en'
+      ? `Concept Request: ${formData.businessName.trim() || formData.fullName.trim()} — VELNAR Studio`
+      : `Demo Talebi: ${formData.businessName.trim() || formData.fullName.trim()} — VELNAR Studio`;
+    const mailUrl = getMailtoUrl(mailSubject, rawMessage);
+    setGeneratedMailtoUrl(mailUrl);
 
     setTimeout(() => {
       setIsSubmitting(false);
       setSubmissionSuccess(true);
-      window.open(waUrl, '_blank', 'noopener,noreferrer');
-    }, 1000);
+      window.location.href = mailUrl;
+    }, 600);
   };
 
   const copyMessageToClipboard = () => {
-    const rawMessage = constructWhatsAppMessage();
+    const rawMessage = constructMessage();
     navigator.clipboard.writeText(rawMessage);
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
@@ -172,7 +174,7 @@ export const DemoRequestForm: React.FC<DemoRequestFormProps> = ({
           {submissionSuccess ? (
             /* Success State */
             <div className="py-6 text-center space-y-5 animate-fadeIn">
-              <div className="w-14 h-14 rounded-2xl bg-[#181918] border border-[#F3F0E8]/[0.15] text-[#25D366] flex items-center justify-center mx-auto shadow-lg">
+              <div className="w-14 h-14 rounded-2xl bg-[#181918] border border-[#F3F0E8]/[0.15] text-[#C6A76A] flex items-center justify-center mx-auto shadow-lg">
                 <CheckCircle2 className="w-7 h-7" />
               </div>
 
@@ -181,19 +183,19 @@ export const DemoRequestForm: React.FC<DemoRequestFormProps> = ({
                   {formDataLocale.success.title}
                 </h3>
                 <p className="text-xs sm:text-sm text-[#AAA69D] max-w-md mx-auto leading-relaxed">
-                  {formDataLocale.success.message}
+                  {lang === 'en' 
+                    ? `Your project details have been prepared for ${CONFIG.EMAIL}. You can review or send the email below.`
+                    : `Proje detaylarınız ${CONFIG.EMAIL} adresine iletilmek üzere hazırlandı. Aşağıdan e-posta gönderebilir veya bilgileri kopyalayabilirsiniz.`}
                 </p>
               </div>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
                 <a
-                  href={generatedWhatsAppUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={generatedMailtoUrl}
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-[#F3F0E8] hover:bg-[#C6A76A] text-[#111211] font-semibold text-xs sm:text-sm shadow-sm transition-all cursor-pointer"
                 >
-                  <MessageCircle className="w-4 h-4 text-[#25D366]" />
-                  <span>{formDataLocale.success.whatsappBtn}</span>
+                  <Mail className="w-4 h-4 text-[#111211]" />
+                  <span>{lang === 'en' ? 'Send via Email App' : 'E-posta Uygulamasıyla Gönder'}</span>
                 </a>
 
                 <button
@@ -202,7 +204,7 @@ export const DemoRequestForm: React.FC<DemoRequestFormProps> = ({
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[#181918] hover:bg-[#1D1E1C] text-[#F3F0E8] text-xs sm:text-sm font-medium border border-[#F3F0E8]/[0.15] transition-all cursor-pointer"
                 >
                   {copied ? <Check className="w-4 h-4 text-[#C6A76A]" /> : <Copy className="w-4 h-4 text-[#AAA69D]" />}
-                  <span>{copied ? (lang === 'en' ? 'Copied' : 'Kopyalandı') : (lang === 'en' ? 'Copy Message' : 'Mesajı Kopyala')}</span>
+                  <span>{copied ? (lang === 'en' ? 'Copied' : 'Kopyalandı') : (lang === 'en' ? 'Copy Details' : 'Detayları Kopyala')}</span>
                 </button>
               </div>
 

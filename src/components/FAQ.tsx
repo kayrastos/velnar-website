@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { ChevronDown, MessageCircle } from 'lucide-react';
-import { getWhatsAppUrl } from '../config';
+import { ChevronDown, Mail } from 'lucide-react';
+import { getMailtoUrl } from '../config';
 
 export const FAQ: React.FC = () => {
   const { t, lang } = useLanguage();
@@ -12,9 +12,9 @@ export const FAQ: React.FC = () => {
     setOpenIndex(openIndex === idx ? null : idx);
   };
 
-  const whatsappMessage = lang === 'en'
-    ? "Hello, I visited your website and have a question regarding your services."
-    : "Merhaba, web sitenizdeki SSS bölümünü okudum, bir konuda danışmak istiyorum.";
+  const mailSubject = lang === 'en'
+    ? "Inquiry regarding services — VELNAR Studio"
+    : "Hizmetler hakkında soru — VELNAR Studio";
 
   return (
     <section id="sss" className="py-14 md:py-16 bg-[#090A0A] relative overflow-hidden">
@@ -81,13 +81,11 @@ export const FAQ: React.FC = () => {
             <div className="text-[11px] text-[#AAA69D]">{faqData.askWhatsApp}</div>
           </div>
           <a
-            href={getWhatsAppUrl(whatsappMessage, lang)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="min-h-[44px] px-4 py-2 rounded-xl bg-[#181918] hover:bg-[#1D1E1C] text-[#F3F0E8] hover:text-white border border-[#F3F0E8]/[0.15] text-xs font-medium flex items-center justify-center gap-1.5 transition-all shrink-0"
+            href={getMailtoUrl(mailSubject)}
+            className="min-h-[44px] px-4 py-2 rounded-xl bg-[#181918] hover:bg-[#1D1E1C] text-[#F3F0E8] hover:text-white border border-[#F3F0E8]/[0.15] hover:border-[#C6A76A]/40 text-xs font-medium flex items-center justify-center gap-1.5 transition-all shrink-0 cursor-pointer"
           >
-            <MessageCircle className="w-3.5 h-3.5 text-[#25D366]" />
-            <span>WhatsApp</span>
+            <Mail className="w-3.5 h-3.5 text-[#C6A76A]" />
+            <span>{lang === 'en' ? 'Email Us' : 'E-posta Gönderin'}</span>
           </a>
         </div>
 
