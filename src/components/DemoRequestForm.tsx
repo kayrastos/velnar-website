@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useLanguage } from '../context/LanguageContext';
 import { CONFIG } from '../config';
 import { DemoFormData } from '../types';
 import { 
@@ -26,7 +27,10 @@ export const DemoRequestForm: React.FC<DemoRequestFormProps> = ({
   selectedPackageFromPricing,
   prefilledIndustry 
 }) => {
+  const { t, lang } = useLanguage();
   const formRef = useRef<HTMLDivElement>(null);
+  const formDataLocale = t.form;
+  const f = formDataLocale.fields;
 
   const [formData, setFormData] = useState<DemoFormData>({
     fullName: '',
@@ -35,7 +39,7 @@ export const DemoRequestForm: React.FC<DemoRequestFormProps> = ({
     phone: '',
     website: '',
     instagram: '',
-    selectedPackage: selectedPackageFromPricing || 'Business',
+    selectedPackage: selectedPackageFromPricing || (lang === 'en' ? 'Pro Studio' : 'Business'),
     note: '',
     termsAccepted: false
   });
@@ -46,7 +50,7 @@ export const DemoRequestForm: React.FC<DemoRequestFormProps> = ({
   const [copied, setCopied] = useState(false);
   const [generatedWhatsAppUrl, setGeneratedWhatsAppUrl] = useState('');
 
-  // Update package when changed externally
+  // Update package when changed externally or when language switches
   useEffect(() => {
     if (selectedPackageFromPricing) {
       setFormData(prev => ({ ...prev, selectedPackage: selectedPackageFromPricing }));
@@ -60,30 +64,35 @@ export const DemoRequestForm: React.FC<DemoRequestFormProps> = ({
     }
   }, [prefilledIndustry]);
 
-  const packageOptions = [
-    { value: 'Starter', label: 'Starter (7.900 TL)' },
-    { value: 'Business', label: 'Business (12.900 TL)' },
-    { value: 'AI Business', label: 'AI Business (19.900 TL)' },
+  const packageOptions = f.packageOptions || (lang === 'en' ? [
+    { value: 'Essential', label: 'Essential ($490)' },
+    { value: 'Pro Studio', label: 'Pro Studio ($890)' },
+    { value: 'Custom Flagship', label: 'Custom Flagship ($1,490+)' },
+    { value: 'Enterprise Bespoke', label: 'Enterprise Bespoke' }
+  ] : [
+    { value: 'Starter', label: 'Starter (6.900 TL)' },
+    { value: 'Business', label: 'Business (10.900 TL)' },
+    { value: 'AI Business', label: 'AI Business (16.900 TL)' },
     { value: 'Özel Proje', label: 'Özel Proje' }
-  ];
+  ]);
 
   const validate = (): boolean => {
     const newErrors: Partial<Record<keyof DemoFormData, string>> = {};
 
     if (!formData.fullName.trim()) {
-      newErrors.fullName = 'Lütfen adınızı ve soyadınızı giriniz.';
+      newErrors.fullName = lang === 'en' ? 'Please enter your name.' : 'Lütfen adınızı ve soyadınızı giriniz.';
     }
     if (!formData.businessName.trim()) {
-      newErrors.businessName = 'Lütfen işletme adınızı giriniz.';
+      newErrors.businessName = lang === 'en' ? 'Please enter your company or brand name.' : 'Lütfen işletmenizin veya markanızın adını giriniz.';
     }
     if (!formData.industry.trim()) {
-      newErrors.industry = 'Lütfen faaliyet gösterdiğiniz sektörü belirtiniz.';
+      newErrors.industry = lang === 'en' ? 'Please enter your industry.' : 'Lütfen sektörünüzü belirtiniz.';
     }
     if (!formData.phone.trim() || formData.phone.trim().length < 7) {
-      newErrors.phone = 'Lütfen geçerli bir telefon numarası giriniz.';
+      newErrors.phone = lang === 'en' ? 'Please enter a valid phone number.' : 'Lütfen geçerli bir telefon numarası giriniz.';
     }
     if (!formData.termsAccepted) {
-      newErrors.termsAccepted = 'Devam etmek için iletişim iznini onaylamanız gerekmektedir.';
+      newErrors.termsAccepted = lang === 'en' ? 'Please accept the data protection terms.' : 'Lütfen aydınlatma metnini onaylayınız.';
     }
 
     setErrors(newErrors);
@@ -91,16 +100,16 @@ export const DemoRequestForm: React.FC<DemoRequestFormProps> = ({
   };
 
   const constructWhatsAppMessage = (): string => {
-    return `Merhaba, ücretsiz web sitesi demosu talep etmek istiyorum.
-
-Ad Soyad: ${formData.fullName.trim()}
-İşletme: ${formData.businessName.trim()}
-Sektör: ${formData.industry.trim()}
-Telefon: ${formData.phone.trim()}
-Web Sitesi: ${formData.website.trim() || '-'}
-Instagram: ${formData.instagram.trim() || '-'}
-İlgilendiğim Paket: ${formData.selectedPackage}
-Not: ${formData.note.trim() || '-'}`;
+    return formDataLocale.whatsappMessageTemplate({
+      fullName: formData.fullName.trim(),
+      businessName: formData.businessName.trim(),
+      industry: formData.industry.trim(),
+      phone: formData.phone.trim(),
+      website: formData.website.trim() || '-',
+      instagram: formData.instagram.trim() || '-',
+      selectedPackage: formData.selectedPackage,
+      note: formData.note.trim() || '-'
+    });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -116,7 +125,6 @@ Not: ${formData.note.trim() || '-'}`;
     const waUrl = `https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${encodedMessage}`;
     setGeneratedWhatsAppUrl(waUrl);
 
-    // Show status message before redirecting
     setTimeout(() => {
       setIsSubmitting(false);
       setSubmissionSuccess(true);
@@ -143,18 +151,18 @@ Not: ${formData.note.trim() || '-'}`;
         <div className="max-w-2xl mx-auto text-center space-y-3 mb-12">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#141514] border border-[#F3F0E8]/[0.09] text-[10px] font-mono uppercase tracking-[0.16em] text-[#AAA69D]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#C6A76A]" />
-            <span>Ücretsiz Demo Talebi</span>
+            <span>{formDataLocale.eyebrow}</span>
           </div>
 
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#F3F0E8] tracking-tight leading-tight">
-            İşletmenizin yeni web sitesini{' '}
+            {formDataLocale.heading}{' '}
             <span className="text-[#C6A76A]">
-              satın almadan önce görün.
+              {formDataLocale.headingHighlight}
             </span>
           </h2>
 
           <p className="text-[#AAA69D] text-xs sm:text-sm max-w-xl mx-auto">
-            Formu doldurun, işletmenize özel hazırlayacağımız örnek ana sayfa konseptini WhatsApp üzerinden iletelim.
+            {formDataLocale.subtitle}
           </p>
         </div>
 
@@ -170,10 +178,10 @@ Not: ${formData.note.trim() || '-'}`;
 
               <div className="space-y-1.5">
                 <h3 className="text-xl sm:text-2xl font-bold text-[#F3F0E8]">
-                  Talebiniz WhatsApp'a Yönlendirildi!
+                  {formDataLocale.success.title}
                 </h3>
                 <p className="text-xs sm:text-sm text-[#AAA69D] max-w-md mx-auto leading-relaxed">
-                  WhatsApp açılmadıysa aşağıdaki butona tıklayarak mesajınızı doğrudan iletebilirsiniz.
+                  {formDataLocale.success.message}
                 </p>
               </div>
 
@@ -185,7 +193,7 @@ Not: ${formData.note.trim() || '-'}`;
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-[#F3F0E8] hover:bg-[#C6A76A] text-[#111211] font-semibold text-xs sm:text-sm shadow-sm transition-all cursor-pointer"
                 >
                   <MessageCircle className="w-4 h-4 text-[#25D366]" />
-                  <span>WhatsApp ile Gönder</span>
+                  <span>{formDataLocale.success.whatsappBtn}</span>
                 </a>
 
                 <button
@@ -194,7 +202,7 @@ Not: ${formData.note.trim() || '-'}`;
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[#181918] hover:bg-[#1D1E1C] text-[#F3F0E8] text-xs sm:text-sm font-medium border border-[#F3F0E8]/[0.15] transition-all cursor-pointer"
                 >
                   {copied ? <Check className="w-4 h-4 text-[#C6A76A]" /> : <Copy className="w-4 h-4 text-[#AAA69D]" />}
-                  <span>{copied ? 'Mesaj Kopyalandı' : 'Mesaj Metnini Kopyala'}</span>
+                  <span>{copied ? (lang === 'en' ? 'Copied' : 'Kopyalandı') : (lang === 'en' ? 'Copy Message' : 'Mesajı Kopyala')}</span>
                 </button>
               </div>
 
@@ -203,7 +211,7 @@ Not: ${formData.note.trim() || '-'}`;
                 onClick={() => setSubmissionSuccess(false)}
                 className="text-xs text-[#AAA69D] hover:text-[#F3F0E8] underline pt-2 cursor-pointer"
               >
-                Yeni bir talep oluştur
+                {formDataLocale.success.newRequestBtn}
               </button>
             </div>
           ) : (
@@ -214,7 +222,7 @@ Not: ${formData.note.trim() || '-'}`;
               {isSubmitting && (
                 <div className="p-3.5 rounded-xl bg-[#181918] border border-[#C6A76A]/40 text-[#C6A76A] text-xs font-semibold flex items-center justify-center gap-2.5 animate-pulse">
                   <span className="w-2 h-2 rounded-full bg-[#C6A76A] animate-ping" />
-                  <span>Talebiniz WhatsApp üzerinden gönderilmeye hazırlanıyor...</span>
+                  <span>{formDataLocale.submitting}</span>
                 </div>
               )}
 
@@ -224,12 +232,12 @@ Not: ${formData.note.trim() || '-'}`;
                 <div className="space-y-1.5 text-left">
                   <label htmlFor="form-fullname" className="text-xs font-semibold text-[#AAA69D] flex items-center gap-1.5">
                     <User className="w-3.5 h-3.5 text-[#74716A]" />
-                    <span>Ad Soyad *</span>
+                    <span>{f.fullName} *</span>
                   </label>
                   <input
                     type="text"
                     id="form-fullname"
-                    placeholder="Örn: Ahmet Yılmaz"
+                    placeholder={f.fullNamePlaceholder}
                     value={formData.fullName}
                     onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                     className={`w-full px-3.5 py-2.5 rounded-xl bg-[#0E0F0F] border text-base sm:text-sm text-[#F3F0E8] placeholder-[#74716A] focus:outline-none focus:border-[#C6A76A] transition-all ${
@@ -248,12 +256,12 @@ Not: ${formData.note.trim() || '-'}`;
                 <div className="space-y-1.5 text-left">
                   <label htmlFor="form-businessname" className="text-xs font-semibold text-[#AAA69D] flex items-center gap-1.5">
                     <Building2 className="w-3.5 h-3.5 text-[#74716A]" />
-                    <span>İşletme Adı *</span>
+                    <span>{f.businessName} *</span>
                   </label>
                   <input
                     type="text"
                     id="form-businessname"
-                    placeholder="Örn: Yılmaz Otomotiv / Aura Klinik"
+                    placeholder={f.businessNamePlaceholder}
                     value={formData.businessName}
                     onChange={(e) => setFormData({ ...formData, businessName: e.target.value })}
                     className={`w-full px-3.5 py-2.5 rounded-xl bg-[#0E0F0F] border text-base sm:text-sm text-[#F3F0E8] placeholder-[#74716A] focus:outline-none focus:border-[#C6A76A] transition-all ${
@@ -272,12 +280,12 @@ Not: ${formData.note.trim() || '-'}`;
                 <div className="space-y-1.5 text-left">
                   <label htmlFor="form-industry" className="text-xs font-semibold text-[#AAA69D] flex items-center gap-1.5">
                     <Layers className="w-3.5 h-3.5 text-[#74716A]" />
-                    <span>Sektör *</span>
+                    <span>{f.industry} *</span>
                   </label>
                   <input
                     type="text"
                     id="form-industry"
-                    placeholder="Örn: Restoran, Oto Galeri, Sağlık, Hukuk"
+                    placeholder={f.industryPlaceholder}
                     value={formData.industry}
                     onChange={(e) => setFormData({ ...formData, industry: e.target.value })}
                     className={`w-full px-3.5 py-2.5 rounded-xl bg-[#0E0F0F] border text-base sm:text-sm text-[#F3F0E8] placeholder-[#74716A] focus:outline-none focus:border-[#C6A76A] transition-all ${
@@ -296,12 +304,12 @@ Not: ${formData.note.trim() || '-'}`;
                 <div className="space-y-1.5 text-left">
                   <label htmlFor="form-phone" className="text-xs font-semibold text-[#AAA69D] flex items-center gap-1.5">
                     <Phone className="w-3.5 h-3.5 text-[#74716A]" />
-                    <span>Telefon Numarası *</span>
+                    <span>{f.phone} *</span>
                   </label>
                   <input
                     type="tel"
                     id="form-phone"
-                    placeholder="Örn: 05XX XXX XX XX"
+                    placeholder={f.phonePlaceholder}
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     className={`w-full px-3.5 py-2.5 rounded-xl bg-[#0E0F0F] border text-base sm:text-sm text-[#F3F0E8] placeholder-[#74716A] focus:outline-none focus:border-[#C6A76A] transition-all ${
@@ -321,14 +329,14 @@ Not: ${formData.note.trim() || '-'}`;
                   <label htmlFor="form-website" className="text-xs font-semibold text-[#AAA69D] flex items-center justify-between">
                     <span className="flex items-center gap-1.5">
                       <Globe className="w-3.5 h-3.5 text-[#74716A]" />
-                      <span>Mevcut Web Sitesi</span>
+                      <span>{f.website}</span>
                     </span>
-                    <span className="text-[10px] text-[#74716A] font-normal">İsteğe Bağlı</span>
+                    <span className="text-[10px] text-[#74716A] font-normal">{lang === 'en' ? 'Optional' : 'İsteğe bağlı'}</span>
                   </label>
                   <input
                     type="text"
                     id="form-website"
-                    placeholder="Örn: www.isletmeniz.com"
+                    placeholder={f.websitePlaceholder}
                     value={formData.website}
                     onChange={(e) => setFormData({ ...formData, website: e.target.value })}
                     className="w-full px-3.5 py-2.5 rounded-xl bg-[#0E0F0F] border border-[#F3F0E8]/[0.09] hover:border-[#F3F0E8]/[0.18] text-base sm:text-sm text-[#F3F0E8] placeholder-[#74716A] focus:outline-none focus:border-[#C6A76A] transition-all"
@@ -340,14 +348,14 @@ Not: ${formData.note.trim() || '-'}`;
                   <label htmlFor="form-instagram" className="text-xs font-semibold text-[#AAA69D] flex items-center justify-between">
                     <span className="flex items-center gap-1.5">
                       <Instagram className="w-3.5 h-3.5 text-[#74716A]" />
-                      <span>Instagram Hesabı</span>
+                      <span>{f.instagram}</span>
                     </span>
-                    <span className="text-[10px] text-[#74716A] font-normal">İsteğe Bağlı</span>
+                    <span className="text-[10px] text-[#74716A] font-normal">{lang === 'en' ? 'Optional' : 'İsteğe bağlı'}</span>
                   </label>
                   <input
                     type="text"
                     id="form-instagram"
-                    placeholder="Örn: @isletmeniz"
+                    placeholder={f.instagramPlaceholder}
                     value={formData.instagram}
                     onChange={(e) => setFormData({ ...formData, instagram: e.target.value })}
                     className="w-full px-3.5 py-2.5 rounded-xl bg-[#0E0F0F] border border-[#F3F0E8]/[0.09] hover:border-[#F3F0E8]/[0.18] text-base sm:text-sm text-[#F3F0E8] placeholder-[#74716A] focus:outline-none focus:border-[#C6A76A] transition-all"
@@ -359,7 +367,7 @@ Not: ${formData.note.trim() || '-'}`;
               {/* İlgilendiğiniz Paket */}
               <div className="space-y-2 text-left pt-1">
                 <label className="text-xs font-semibold text-[#AAA69D] block">
-                  İlgilendiğiniz Paket:
+                  {f.package}:
                 </label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2.5 w-full">
                   {packageOptions.map((pkg) => (
@@ -387,14 +395,14 @@ Not: ${formData.note.trim() || '-'}`;
                 <label htmlFor="form-note" className="text-xs font-semibold text-[#AAA69D] flex items-center justify-between">
                   <span className="flex items-center gap-1.5">
                     <FileText className="w-3.5 h-3.5 text-[#74716A]" />
-                    <span>Özel İstekler / Not</span>
+                    <span>{f.note}</span>
                   </span>
-                  <span className="text-[10px] text-[#74716A] font-normal">İsteğe Bağlı</span>
+                  <span className="text-[10px] text-[#74716A] font-normal">{lang === 'en' ? 'Optional' : 'İsteğe bağlı'}</span>
                 </label>
                 <textarea
                   id="form-note"
                   rows={2}
-                  placeholder="Örnek: Sitemizde online randevu butonu ve WhatsApp danışma hattı olmasını istiyoruz..."
+                  placeholder={f.notePlaceholder}
                   value={formData.note}
                   onChange={(e) => setFormData({ ...formData, note: e.target.value })}
                   className="w-full px-3.5 py-2.5 rounded-xl bg-[#0E0F0F] border border-[#F3F0E8]/[0.09] hover:border-[#F3F0E8]/[0.18] text-base sm:text-sm text-[#F3F0E8] placeholder-[#74716A] focus:outline-none focus:border-[#C6A76A] transition-all resize-none"
@@ -412,7 +420,7 @@ Not: ${formData.note.trim() || '-'}`;
                     className="mt-0.5 w-4 h-4 min-w-[16px] min-h-[16px] rounded bg-[#0E0F0F] border-[#F3F0E8]/[0.15] accent-[#C6A76A] transition-colors"
                   />
                   <span className="text-xs text-[#AAA69D] leading-tight">
-                    İşletmem için ücretsiz web sitesi demosu hazırlanması amacıyla WhatsApp veya telefon üzerinden benimle iletişime geçilmesini kabul ediyorum.
+                    {f.kvkkConsent}
                   </span>
                 </label>
                 {errors.termsAccepted && (
@@ -432,7 +440,7 @@ Not: ${formData.note.trim() || '-'}`;
                   className="w-full min-h-[48px] py-3.5 px-6 rounded-xl bg-[#F3F0E8] hover:bg-[#C6A76A] text-[#111211] hover:text-[#111211] font-semibold text-xs sm:text-sm tracking-wide flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <Send className="w-4 h-4" />
-                  <span>{isSubmitting ? 'Talebiniz Hazırlanıyor...' : 'Ücretsiz Demo Talep Et'}</span>
+                  <span>{isSubmitting ? formDataLocale.submitting : formDataLocale.submitCta}</span>
                 </button>
               </div>
 
@@ -445,4 +453,6 @@ Not: ${formData.note.trim() || '-'}`;
     </section>
   );
 };
+
+
 

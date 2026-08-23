@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLanguage } from '../context/LanguageContext';
 import { CONFIG, getWhatsAppUrl } from '../config';
 import { VelnarLogo } from './VelnarLogo';
 import { Mail, Instagram, MessageCircle, MapPin, ArrowUp } from 'lucide-react';
@@ -9,6 +10,8 @@ interface FooterProps {
 }
 
 export const Footer: React.FC<FooterProps> = ({ onOpenLegal, onDemoClick }) => {
+  const { t, lang } = useLanguage();
+  const footerData = t.footer;
   const currentYear = new Date().getFullYear();
 
   const scrollToTop = () => {
@@ -16,11 +19,11 @@ export const Footer: React.FC<FooterProps> = ({ onOpenLegal, onDemoClick }) => {
   };
 
   const navLinks = [
-    { label: 'Demolar', href: '#demolar' },
-    { label: 'Faydalar', href: '#faydalar' },
-    { label: 'Süreç', href: '#surec' },
-    { label: 'Paketler', href: '#paketler' },
-    { label: 'SSS', href: '#sss' },
+    { label: t.nav.work, href: '#demolar' },
+    { label: t.nav.services, href: '#faydalar' },
+    { label: t.nav.process, href: '#surec' },
+    { label: t.nav.pricing, href: '#paketler' },
+    { label: t.nav.faq, href: '#sss' },
   ];
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -42,25 +45,23 @@ export const Footer: React.FC<FooterProps> = ({ onOpenLegal, onDemoClick }) => {
             <VelnarLogo />
 
             <p className="text-[#F3F0E8]/80 text-xs font-mono tracking-wide">
-              Websites · Digital Products · AI Systems
+              {footerData.tagline}
             </p>
 
             <p className="text-[#AAA69D] text-xs sm:text-sm max-w-sm leading-relaxed">
-              Modern işletmeler için hızlı, mobil uyumlu ve müşteri kazandırmaya odaklı web siteleri ve dijital çözümler.
+              {footerData.remoteNotice}
             </p>
 
-            {CONFIG.LOCATION && (
-              <div className="flex items-center gap-2 text-xs text-[#74716A]">
-                <MapPin className="w-3.5 h-3.5 text-[#74716A]" />
-                <span>{CONFIG.LOCATION}</span>
-              </div>
-            )}
+            <div className="flex items-center gap-2 text-xs text-[#74716A]">
+              <MapPin className="w-3.5 h-3.5 text-[#74716A]" />
+              <span>{lang === 'en' ? 'Istanbul · Available for Global Projects' : CONFIG.LOCATION}</span>
+            </div>
           </div>
 
           {/* Col 2: Navigation Links (3 cols) */}
           <div className="lg:col-span-3 space-y-3 text-left">
             <div className="text-xs font-semibold text-[#F3F0E8] uppercase tracking-wider">
-              Hızlı Bağlantılar
+              {footerData.quickLinksTitle}
             </div>
             <ul className="space-y-2">
               {navLinks.map((link) => (
@@ -79,7 +80,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenLegal, onDemoClick }) => {
                   onClick={onDemoClick}
                   className="text-[#F3F0E8] hover:text-[#C6A76A] font-medium transition-colors cursor-pointer py-1 inline-block"
                 >
-                  Ücretsiz Demo İste →
+                  {t.nav.ctaButton}
                 </button>
               </li>
             </ul>
@@ -88,7 +89,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenLegal, onDemoClick }) => {
           {/* Col 3: Contact & Channels (4 cols) */}
           <div className="lg:col-span-4 space-y-3 text-left">
             <div className="text-xs font-semibold text-[#F3F0E8] uppercase tracking-wider">
-              İletişim & Kanallar
+              {footerData.contactTitle}
             </div>
             
             <div className="space-y-2.5">
@@ -103,7 +104,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenLegal, onDemoClick }) => {
               </a>
 
               <a
-                href={getWhatsAppUrl()}
+                href={getWhatsAppUrl(undefined, lang)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2.5 text-[#AAA69D] hover:text-[#F3F0E8] transition-colors group"
@@ -135,7 +136,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenLegal, onDemoClick }) => {
         {/* Bottom Legal & Copyright */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[#74716A]">
           <div className="text-center sm:text-left">
-            © {currentYear} {CONFIG.BRAND_NAME}. Tüm hakları saklıdır.
+            © {currentYear} {CONFIG.BRAND_NAME}. {footerData.copyright}
           </div>
 
           <div className="flex items-center gap-4 sm:gap-6">
@@ -143,19 +144,19 @@ export const Footer: React.FC<FooterProps> = ({ onOpenLegal, onDemoClick }) => {
               onClick={() => onOpenLegal('gizlilik')}
               className="py-1 px-1.5 hover:text-[#F3F0E8] transition-colors cursor-pointer text-xs"
             >
-              Gizlilik
+              {footerData.privacyText}
             </button>
             <button
               onClick={() => onOpenLegal('kvkk')}
               className="py-1 px-1.5 hover:text-[#F3F0E8] transition-colors cursor-pointer text-xs"
             >
-              KVKK
+              {footerData.kvkkText}
             </button>
             <button
               onClick={scrollToTop}
               className="w-9 h-9 rounded-lg bg-[#141514] hover:bg-[#181918] border border-[#F3F0E8]/[0.09] text-[#AAA69D] hover:text-[#F3F0E8] flex items-center justify-center transition-colors cursor-pointer"
-              title="Yukarı Çık"
-              aria-label="Yukarı Çık"
+              title={lang === 'en' ? 'Back to top' : 'Yukarı Çık'}
+              aria-label={lang === 'en' ? 'Back to top' : 'Yukarı Çık'}
             >
               <ArrowUp className="w-4 h-4" />
             </button>
@@ -166,4 +167,6 @@ export const Footer: React.FC<FooterProps> = ({ onOpenLegal, onDemoClick }) => {
     </footer>
   );
 };
+
+
 

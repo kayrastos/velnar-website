@@ -1,37 +1,17 @@
 import React from 'react';
+import { useLanguage } from '../context/LanguageContext';
 import { Sparkles, Smartphone, UserCheck, Search, ArrowUpRight } from 'lucide-react';
 
 export const ProblemValue: React.FC = () => {
-  const cards = [
-    {
-      id: 'val-first-impression',
-      icon: Sparkles,
-      title: 'Profesyonel İlk İzlenim',
-      description: 'Müşterileriniz sizi ilk olarak internette değerlendirir. Markanıza güven kazandıran seçkin bir dijital vitrin sunuyoruz.',
-      highlight: 'Güven veren tasarım'
-    },
-    {
-      id: 'val-mobile-first',
-      icon: Smartphone,
-      title: 'Mobil Öncelikli',
-      description: 'Ziyaretçilerinizin çoğu telefondan gelir. Tüm ekranlarda hızlı, akıcı ve hatasız bir kullanıcı deneyimi sağlıyoruz.',
-      highlight: 'Kusursuz mobil deneyim'
-    },
-    {
-      id: 'val-conversion',
-      icon: UserCheck,
-      title: 'Müşteriye Dönüşüm',
-      description: 'WhatsApp, arama butonları ve net yönlendirmelerle ziyaretçileri doğrudan müşteriye dönüştürüyoruz.',
-      highlight: 'Hızlı iletişim akışları'
-    },
-    {
-      id: 'val-seo',
-      icon: Search,
-      title: 'Google İçin Sağlam Temel',
-      description: 'Hız, temiz kod ve semantik yapıyla arama motorlarında doğru konumlanmanız için teknik temeli kuruyoruz.',
-      highlight: 'Doğru teknik SEO'
-    }
-  ];
+  const { t } = useLanguage();
+  const pv = t.problemValue;
+
+  const iconMap: Record<number, React.ElementType> = {
+    0: Sparkles,
+    1: Smartphone,
+    2: UserCheck,
+    3: Search
+  };
 
   return (
     <section id="faydalar" className="py-16 md:py-20 bg-[#090A0A] relative overflow-hidden">
@@ -40,23 +20,24 @@ export const ProblemValue: React.FC = () => {
         {/* Section Header */}
         <div className="max-w-3xl mx-auto text-center space-y-3 mb-12 md:mb-14">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#141514] border border-[#F3F0E8]/[0.09] text-[10px] font-mono uppercase tracking-[0.16em] text-[#AAA69D]">
-            Temel Değer
+            <span className="w-1.5 h-1.5 rounded-full bg-[#C6A76A]" />
+            <span>{pv.eyebrow}</span>
           </div>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#F3F0E8] tracking-tight leading-tight">
-            Web siteniz işletmeniz için{' '}
+            {pv.heading}{' '}
             <span className="text-[#C6A76A]">
-              müşteri üretmeli.
+              {pv.headingHighlight}
             </span>
           </h2>
           <p className="text-[#AAA69D] text-sm sm:text-base">
-            Modern, hızlı ve sonuç odaklı bir web sitesinin işletmenize kazandıracakları.
+            {pv.subtitle}
           </p>
         </div>
 
         {/* Compact 4-Column Desktop Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
-          {cards.map((card) => {
-            const Icon = card.icon;
+          {pv.items.map((card, index) => {
+            const Icon = iconMap[index] || Sparkles;
             return (
               <div
                 key={card.id}
@@ -69,20 +50,20 @@ export const ProblemValue: React.FC = () => {
                     <Icon className="w-5 h-5" />
                   </div>
 
-                  {/* Title */}
+                  {/* Title / Problem */}
                   <h3 className="text-base font-bold text-[#F3F0E8] mb-2 group-hover:text-[#C6A76A] transition-colors">
-                    {card.title}
+                    {card.solution}
                   </h3>
 
-                  {/* Description - max 2 short sentences */}
+                  {/* Description / Solution */}
                   <p className="text-xs sm:text-sm text-[#AAA69D] leading-relaxed">
-                    {card.description}
+                    {card.problem}
                   </p>
                 </div>
 
-                {/* Sub badge */}
+                {/* Sub badge / Impact */}
                 <div className="pt-4 mt-4 border-t border-[#F3F0E8]/[0.06] flex items-center justify-between text-xs text-[#AAA69D] font-medium">
-                  <span className="group-hover:text-[#F3F0E8] transition-colors">{card.highlight}</span>
+                  <span className="group-hover:text-[#F3F0E8] transition-colors">{card.impact}</span>
                   <ArrowUpRight className="w-3.5 h-3.5 text-[#74716A] group-hover:text-[#C6A76A] transition-colors" />
                 </div>
               </div>
@@ -94,4 +75,6 @@ export const ProblemValue: React.FC = () => {
     </section>
   );
 };
+
+
 

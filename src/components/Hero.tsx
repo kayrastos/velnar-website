@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { CONFIG, getWhatsAppUrl } from '../config';
+import { useLanguage } from '../context/LanguageContext';
+import { getWhatsAppUrl } from '../config';
 import { 
   ArrowRight, 
   MessageCircle, 
@@ -18,10 +19,39 @@ interface HeroProps {
 }
 
 export const Hero: React.FC<HeroProps> = ({ onDemoClick }) => {
+  const { lang, t } = useLanguage();
   const [activeTab, setActiveTab] = useState<'desktop' | 'mobile'>('desktop');
   const [activeIndustry, setActiveIndustry] = useState<number>(0);
 
-  const previewSites = [
+  const previewSites = lang === 'en' ? [
+    {
+      title: "Aurel Motors • Automotive",
+      tagline: "Prestige Chauffeur & Exotic Fleet",
+      tag: "Automotive",
+      pillBg: "bg-[#181918] text-[#AAA69D] border-[#F3F0E8]/[0.09]",
+      cta: "Contact via WhatsApp",
+      metric: "99/100 Speed Score",
+      features: ["VIP Fleet Showcase", "Instant Booking Flow", "Executive Concierge"]
+    },
+    {
+      title: "Lumera • Aesthetic & Wellness",
+      tagline: "Reveal Your Natural Radiance",
+      tag: "Aesthetics",
+      pillBg: "bg-[#181918] text-[#AAA69D] border-[#F3F0E8]/[0.09]",
+      cta: "Schedule Consultation",
+      metric: "Mobile-First UX",
+      features: ["Clinical Treatment Menu", "Before & After Results", "Direct Booking Channel"]
+    },
+    {
+      title: "Sera • Artisan Dining",
+      tagline: "Seasonal Flavors & Table Hospitality",
+      tag: "Hospitality",
+      pillBg: "bg-[#181918] text-[#AAA69D] border-[#F3F0E8]/[0.09]",
+      cta: "Reserve a Table",
+      metric: "Conversion Ready",
+      features: ["Interactive QR Menu", "Real-Time Table Booking", "Private Events"]
+    }
+  ] : [
     {
       title: "Vip Motors • Otomotiv",
       tagline: "Lüks & Premium Araç Portföyü",
@@ -29,7 +59,7 @@ export const Hero: React.FC<HeroProps> = ({ onDemoClick }) => {
       pillBg: "bg-[#181918] text-[#AAA69D] border-[#F3F0E8]/[0.09]",
       cta: "WhatsApp ile İletişime Geç",
       metric: "99/100 Hız Skoru",
-      features: ["Filtreli Araç Kataloğu", "Hızlı Kredi Başvurusu", "Konum & Yol Tarifi"]
+      features: ["Filtreli Araç Kataloğu", "Hızlı Rezervasyon", "Konum & Yol Tarifi"]
     },
     {
       title: "Aura Klinik • Estetik & Güzellik",
@@ -53,6 +83,14 @@ export const Hero: React.FC<HeroProps> = ({ onDemoClick }) => {
 
   const currentPreview = previewSites[activeIndustry];
 
+  const handleWorkClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const el = document.querySelector('#demolar');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section id="hero" className="relative pt-24 pb-14 md:pt-28 md:pb-16 overflow-hidden bg-[#090A0A]">
       {/* Background Subtle Depth */}
@@ -71,45 +109,54 @@ export const Hero: React.FC<HeroProps> = ({ onDemoClick }) => {
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#141514] border border-[#F3F0E8]/[0.09]">
               <span className="w-1.5 h-1.5 rounded-full bg-[#C6A76A]" />
               <span className="text-[10px] font-mono uppercase tracking-[0.16em] text-[#AAA69D]">
-                {CONFIG.TAGLINE}
+                {t.hero.eyebrow}
               </span>
             </div>
 
             {/* Main Heading */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-extrabold tracking-tight text-[#F3F0E8] leading-[1.14] break-words">
-              İşletmenizi internette{' '}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[52px] font-extrabold tracking-tight text-[#F3F0E8] leading-[1.14] break-words">
+              {t.hero.headlinePart1}
               <span className="text-[#C6A76A]">
-                daha güçlü gösteren
-              </span>{' '}
-              web siteleri.
+                {t.hero.headlineHighlight}
+              </span>
+              {t.hero.headlinePart2}
             </h1>
 
             {/* Supporting Text */}
             <p className="text-base sm:text-lg text-[#AAA69D] max-w-2xl leading-[1.65] font-normal">
-              Hızlı, mobil uyumlu ve ziyaretçileri müşteriye dönüştürmeye odaklı web siteleri tasarlıyoruz. İşletmenize özel ücretsiz bir ana sayfa demosu hazırlayalım; beğenirseniz birlikte yayına alalım.
+              {t.hero.description}
             </p>
 
+            {/* Trust Bullets List */}
+            <div className="space-y-1.5 text-xs text-[#AAA69D] font-mono">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-3.5 h-3.5 text-[#C6A76A] shrink-0" />
+                <span>{t.hero.trustBullet1}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-3.5 h-3.5 text-[#C6A76A] shrink-0" />
+                <span>{t.hero.trustBullet2}</span>
+              </div>
+            </div>
+
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
               <button
                 onClick={onDemoClick}
                 id="hero-primary-cta"
                 className="inline-flex min-h-[44px] items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#F3F0E8] hover:bg-[#C6A76A] text-[#111211] hover:text-[#111211] font-semibold text-xs sm:text-sm tracking-wide transition-all duration-200 cursor-pointer shadow-sm group"
               >
-                <span>Ücretsiz Demomu Hazırla</span>
+                <span>{t.hero.primaryCta}</span>
                 <ArrowRight className="w-4 h-4 text-[#111211] group-hover:translate-x-1 transition-transform" />
               </button>
 
-              <a
-                href={getWhatsAppUrl("Merhaba, web sitenizden ulaşıyorum. İşletmem için ücretsiz ana sayfa demosu hakkında görüşmek istiyorum.")}
-                target="_blank"
-                rel="noopener noreferrer"
-                id="hero-secondary-whatsapp-cta"
-                className="inline-flex min-h-[44px] items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-[#141514] hover:bg-[#1D1E1C] text-[#F3F0E8] hover:text-white font-medium text-xs sm:text-sm border border-[#F3F0E8]/[0.15] transition-all duration-200 shadow-sm group"
+              <button
+                onClick={handleWorkClick}
+                id="hero-secondary-work-cta"
+                className="inline-flex min-h-[44px] items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-[#141514] hover:bg-[#1D1E1C] text-[#F3F0E8] hover:text-white font-medium text-xs sm:text-sm border border-[#F3F0E8]/[0.15] transition-all duration-200 shadow-sm cursor-pointer"
               >
-                <MessageCircle className="w-4 h-4 text-[#25D366] group-hover:scale-110 transition-transform" />
-                <span>WhatsApp'tan Görüşelim</span>
-              </a>
+                <span>{t.hero.secondaryCta}</span>
+              </button>
             </div>
 
             {/* Value / Trust Items Underneath */}
@@ -118,21 +165,21 @@ export const Hero: React.FC<HeroProps> = ({ onDemoClick }) => {
                 <div className="w-6 h-6 rounded-lg bg-[#141514] border border-[#F3F0E8]/[0.09] flex items-center justify-center text-[#C6A76A]">
                   <Smartphone className="w-3.5 h-3.5" />
                 </div>
-                <span className="font-medium text-[#AAA69D]">Mobil uyumlu</span>
+                <span className="font-medium text-[#AAA69D]">{lang === 'en' ? 'Mobile First' : 'Mobil uyumlu'}</span>
               </div>
 
               <div className="flex items-center gap-2">
                 <div className="w-6 h-6 rounded-lg bg-[#141514] border border-[#F3F0E8]/[0.09] flex items-center justify-center text-[#C6A76A]">
                   <Search className="w-3.5 h-3.5" />
                 </div>
-                <span className="font-medium text-[#AAA69D]">SEO temelli</span>
+                <span className="font-medium text-[#AAA69D]">{lang === 'en' ? 'SEO Foundations' : 'SEO temelli'}</span>
               </div>
 
               <div className="flex items-center gap-2">
                 <div className="w-6 h-6 rounded-lg bg-[#141514] border border-[#F3F0E8]/[0.09] flex items-center justify-center text-[#C6A76A]">
                   <TrendingUp className="w-3.5 h-3.5" />
                 </div>
-                <span className="font-medium text-[#AAA69D]">Satış odaklı</span>
+                <span className="font-medium text-[#AAA69D]">{lang === 'en' ? 'Conversion Focused' : 'Satış odaklı'}</span>
               </div>
             </div>
 
@@ -146,7 +193,7 @@ export const Hero: React.FC<HeroProps> = ({ onDemoClick }) => {
               <div className="flex items-center gap-1 bg-[#141514] p-1 rounded-xl border border-[#F3F0E8]/[0.09] text-xs overflow-x-auto max-w-[calc(100%-80px)] shrink">
                 {previewSites.map((item, idx) => (
                   <button
-                    key={item.tag}
+                    key={idx}
                     onClick={() => setActiveIndustry(idx)}
                     className={`px-2 sm:px-2.5 py-1 rounded-lg transition-all font-medium text-[10px] sm:text-[11px] whitespace-nowrap cursor-pointer shrink-0 ${
                       activeIndustry === idx
@@ -165,7 +212,7 @@ export const Hero: React.FC<HeroProps> = ({ onDemoClick }) => {
                   className={`p-1.5 rounded-lg transition-all cursor-pointer ${
                     activeTab === 'desktop' ? 'bg-[#181918] text-[#F3F0E8]' : 'text-[#74716A] hover:text-[#AAA69D]'
                   }`}
-                  title="Masaüstü Görünümü"
+                  title={t.hero.deviceDesktop}
                 >
                   <Globe className="w-3.5 h-3.5" />
                 </button>
@@ -174,7 +221,7 @@ export const Hero: React.FC<HeroProps> = ({ onDemoClick }) => {
                   className={`p-1.5 rounded-lg transition-all cursor-pointer ${
                     activeTab === 'mobile' ? 'bg-[#181918] text-[#F3F0E8]' : 'text-[#74716A] hover:text-[#AAA69D]'
                   }`}
-                  title="Mobil Görünüm"
+                  title={t.hero.deviceMobile}
                 >
                   <Smartphone className="w-3.5 h-3.5" />
                 </button>
@@ -195,11 +242,11 @@ export const Hero: React.FC<HeroProps> = ({ onDemoClick }) => {
                 </div>
                 <div className="bg-[#141514] px-3 py-0.5 rounded-md border border-[#F3F0E8]/[0.08] text-[10px] text-[#AAA69D] font-mono flex items-center gap-1.5 truncate max-w-[190px]">
                   <ShieldCheck className="w-3 h-3 text-[#C6A76A] shrink-0" />
-                  <span className="truncate">ornek-isletme.com</span>
+                  <span className="truncate">concept-preview.velnar.studio</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#25D366]" />
-                  <span className="text-[10px] text-[#AAA69D] font-mono hidden sm:inline">Canlı Demo</span>
+                  <span className="text-[10px] text-[#AAA69D] font-mono hidden sm:inline">{t.hero.liveBadge}</span>
                 </div>
               </div>
 
@@ -223,7 +270,7 @@ export const Hero: React.FC<HeroProps> = ({ onDemoClick }) => {
                 {/* Simulated Hero Body */}
                 <div className="py-3.5 space-y-2.5">
                   <span className={`inline-block text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded border ${currentPreview.pillBg}`}>
-                    {currentPreview.tag} Konsepti
+                    {currentPreview.tag} {lang === 'en' ? 'Concept' : 'Konsepti'}
                   </span>
 
                   <h3 className="text-base sm:text-lg font-bold text-[#F3F0E8] leading-tight">
@@ -231,7 +278,9 @@ export const Hero: React.FC<HeroProps> = ({ onDemoClick }) => {
                   </h3>
 
                   <p className="text-xs text-[#AAA69D] leading-relaxed">
-                    İşletmenizin kurumsal kimliğini yansıtan, telefon ve WhatsApp üzerinden anında talep toplayan modern arayüz.
+                    {lang === 'en' 
+                      ? 'Refined brand experience engineered to capture leads and drive customer inquiries seamlessly.'
+                      : 'İşletmenizin kurumsal kimliğini yansıtan, telefon ve WhatsApp üzerinden anında talep toplayan modern arayüz.'}
                   </p>
 
                   {/* Feature Pills */}
@@ -252,8 +301,8 @@ export const Hero: React.FC<HeroProps> = ({ onDemoClick }) => {
                       <MessageCircle className="w-3.5 h-3.5 text-[#25D366]" />
                     </div>
                     <div>
-                      <div className="text-[11px] font-semibold text-[#F3F0E8]">7/24 İletişim Hattı</div>
-                      <div className="text-[9px] text-[#AAA69D]">Anında WhatsApp Yönlendirmesi</div>
+                      <div className="text-[11px] font-semibold text-[#F3F0E8]">{lang === 'en' ? 'Direct Inquiries' : '7/24 İletişim Hattı'}</div>
+                      <div className="text-[9px] text-[#AAA69D]">{lang === 'en' ? 'One-Tap WhatsApp' : 'Anında WhatsApp Yönlendirmesi'}</div>
                     </div>
                   </div>
 
@@ -275,8 +324,8 @@ export const Hero: React.FC<HeroProps> = ({ onDemoClick }) => {
                 <ShieldCheck className="w-4 h-4 text-[#C6A76A]" />
               </div>
               <div>
-                <div className="text-xs font-bold text-[#F3F0E8]">Ücretsiz Önizleme</div>
-                <div className="text-[10px] text-[#AAA69D]">Beğenirseniz yayına alalım</div>
+                <div className="text-xs font-bold text-[#F3F0E8]">{t.trustBanner.tagline}</div>
+                <div className="text-[10px] text-[#AAA69D]">{t.trustBanner.guaranteeSubtitle}</div>
               </div>
             </div>
 
@@ -287,3 +336,4 @@ export const Hero: React.FC<HeroProps> = ({ onDemoClick }) => {
     </section>
   );
 };
+
