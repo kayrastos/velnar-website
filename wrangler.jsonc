@@ -4,16 +4,6 @@
   "main": "./worker/index.ts",
   "compatibility_date": "2026-08-23",
   "compatibility_flags": ["nodejs_compat"],
-  "observability": {
-    "enabled": true,
-    "head_sampling_rate": 1,
-    "logs": {
-      "enabled": true,
-      "head_sampling_rate": 1,
-      "persist": true,
-      "invocation_logs": true
-    }
-  },
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
@@ -27,5 +17,15 @@
       "database_id": "8e0583cb-d5b8-4d1c-bfcd-b2b277ca381c",
       "migrations_dir": "migrations"
     }
-  ]
+  ],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1,
+    "logs": {
+      "enabled": true,
+      "head_sampling_rate": 1,
+      "persist": true,
+      "invocation_logs": true
+    }
+  }
 }
