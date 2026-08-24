@@ -240,3 +240,70 @@ export async function retrieveIyzicoCheckoutForm(
   const data = (await response.json()) as IyzicoDetailResponse;
   return data;
 }
+
+/**
+ * Computes standard SHA-256 hash as lowercase hex string.
+ */
+export async function sha256Hex(data: string): Promise<string> {
+  const encoder = new TextEncoder();
+  const hashBuffer = await crypto.subtle.digest('SHA-256', encoder.encode(data));
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+/**
+ * Constant-time comparison between two strings to prevent timing attacks.
+ */
+export function timingSafeEqual(a: string, b: string): boolean {
+  if (typeof a !== 'string' || typeof b !== 'string') {
+    return false;
+  }
+  if (a.length !== b.length) {
+    return false;
+  }
+  let result = 0;
+  for (let i = 0; i < a.length; i++) {
+    result |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  }
+  return result === 0;
+}
+
+export interface IyzicoWebhookPayload {
+  iyziEventType?: string;
+  iyziPaymentId?: string | number;
+  token?: string;
+  paymentConversationId?: string;
+  status?: string;
+  iyziReferenceCode?: string;
+  [key: string]: unknown;
+}
+
+/**
+ * Verifies iyzico Checkout Form (HPP) Webhook Signature V3.
+ *
+ * For HPP the signature input is EXACTLY:
+ * secretKey + iyziEventType + iyziPaymentId + token + paymentConversationId + status
+ *
+ * It is hashed with HMAC-SHA256 using env.IYZICO_SECRET_KEY and returned as lowercase hex.
+ */
+export async function verifyIyzicoHppWebhookV3(
+  secretKey: string,
+  payload: IyzicoWebhookPayload,
+  signatureHeader: string | null
+): Promise<boolean> {
+  if (!secretKey || !signatureHeader || typeof signatureHeader !== 'string') {
+    return false;
+  }
+
+  const iyziEventType = payload.iyziEventType ? String(payload.iyziEventType) : '';
+  const iyziPaymentId = payload.iyziPaymentId !== undefined && payload.iyziPaymentId !== null ? String(payload.iyziPaymentId) : '';
+  const token = payload.token ? String(payload.token) : '';
+  const paymentConversationId = payload.paymentConversationId ? String(payload.paymentConversationId) : '';
+  const status = payload.status ? String(payload.status) : '';
+
+  const signatureInput = `${secretKey}${iyziEventType}${iyziPaymentId}${token}${paymentConversationId}${status}`;
+  const calculatedSignatureHex = (await computeHmacSha256Hex(secretKey, signatureInput)).toLowerCase();
+  const providedSignatureHex = signatureHeader.trim().toLowerCase();
+
+  return timingSafeEqual(calculatedSignatureHex, providedSignatureHex);
+}

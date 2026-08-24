@@ -9,5 +9,13 @@
     "binding": "ASSETS",
     "not_found_handling": "single-page-application",
     "run_worker_first": ["/api/*"]
-  }
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "velnar-payments",
+      "database_id": "8e0583cb-d5b8-4d1c-bfcd-b2b277ca381c",
+      "migrations_dir": "migrations"
+    }
+  ]
 }

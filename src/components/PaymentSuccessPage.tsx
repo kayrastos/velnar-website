@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { CONFIG } from '../config';
 import { CheckCircle2, ShieldCheck, Mail, ArrowRight, Home, Sparkles } from 'lucide-react';
 
 interface PaymentSuccessPageProps {
   onGoHome: () => void;
+}
+
+interface PaymentStatusData {
+  ok?: boolean;
+  status?: string;
+  packageId?: string;
+  market?: string;
+  currency?: string;
+  paidAmount?: number;
+  referenceId?: string;
 }
 
 export const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onGoHome }) => {
@@ -15,6 +25,22 @@ export const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onGoHome
   const urlParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : new URLSearchParams();
   const rawRef = urlParams.get('ref') || '';
   const reference = rawRef.slice(0, 100).replace(/[^a-zA-Z0-9_-]/g, '');
+
+  const [statusData, setStatusData] = useState<PaymentStatusData | null>(null);
+
+  useEffect(() => {
+    if (!reference) return;
+    fetch(`/api/payment/status?ref=${encodeURIComponent(reference)}`)
+      .then(async (res) => (res.ok ? ((await res.json()) as PaymentStatusData) : null))
+      .then((data) => {
+        if (data && data.ok) {
+          setStatusData(data);
+        }
+      })
+      .catch(() => {
+        // Silently ignore network errors, fallback to basic ref display
+      });
+  }, [reference]);
 
   return (
     <div className="min-h-[80vh] flex items-center justify-center py-16 px-4 sm:px-6">
@@ -45,6 +71,15 @@ export const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onGoHome
             <div className="flex items-center justify-between pb-2 border-b border-[#F3F0E8]/[0.06]">
               <span className="text-[#AAA69D]">{isEn ? 'Reference ID' : 'Referans Kodu'}</span>
               <span className="text-[#F3F0E8] font-mono text-[11px] font-semibold">{reference}</span>
+            </div>
+          )}
+
+          {statusData?.paidAmount && statusData?.currency && (
+            <div className="flex items-center justify-between pb-2 border-b border-[#F3F0E8]/[0.06]">
+              <span className="text-[#AAA69D]">{isEn ? 'Verified Initial Payment' : 'Doğrulanan Başlangıç Ödemesi'}</span>
+              <span className="text-[#C6A76A] font-semibold">
+                {statusData.currency === 'TRY' ? `₺${statusData.paidAmount.toLocaleString('tr-TR')}` : `$${statusData.paidAmount}`}
+              </span>
             </div>
           )}
 
@@ -79,3 +114,4 @@ export const PaymentSuccessPage: React.FC<PaymentSuccessPageProps> = ({ onGoHome
     </div>
   );
 };
+

@@ -118,12 +118,14 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, packageId, o
     setIsSubmitting(true);
 
     try {
+      const idempotencyKey = crypto.randomUUID();
       const response = await fetch('/api/payment/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          idempotencyKey,
           packageId,
           market,
           language: lang,
